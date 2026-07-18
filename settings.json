@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.blade.php": "blade"
+    },
+
+    "[blade]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    "javascript.validate.enable": false,
+
+    "typescript.validate.enable": false
+}

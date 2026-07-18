@@ -1,0 +1,258 @@
+/* ===========================================================
+   SIMRAMA CUSTOM THEME
+   =========================================================== */
+
+/* ===========================
+   Sidebar Header
+=========================== */
+
+.sidebar-header {
+    padding: 20px 18px 15px;
+    border-bottom: 1px solid #ececec;
+}
+
+.sidebar-header .logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.sidebar-header img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+}
+
+.sidebar-header .logo-text h4 {
+    margin: 0;
+    color: #435ebe;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.sidebar-header .logo-text span {
+    display: block;
+    font-size: 12px;
+    color: #7d8ca3;
+    line-height: 1.3;
+}
+
+/* ===========================
+   Sidebar Menu Title
+=========================== */
+
+.sidebar-title {
+    margin-top: 22px;
+    margin-bottom: 10px;
+    padding-left: 18px;
+
+    font-size: 11px;
+    font-weight: 700;
+    color: #9aa4b2;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* ===========================
+   Sidebar Item
+=========================== */
+
+.sidebar-item>a {
+    padding: 13px 18px;
+    border-radius: 10px;
+    margin: 3px 10px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition: .25s;
+}
+
+.sidebar-item>a i {
+    font-size: 17px;
+    margin-right: 10px;
+}
+
+/* Hover */
+
+.sidebar-item>a:hover {
+    background: #eef2ff;
+    color: #435ebe;
+}
+
+/* Active */
+
+.sidebar-item.active>a {
+    background: #435ebe;
+    color: white;
+}
+
+.sidebar-item.active>a i {
+    color: white;
+}
+
+/* ===========================
+   Submenu
+=========================== */
+
+.submenu {
+    padding-left: 10px;
+}
+
+.submenu-item a {
+    padding: 10px 20px 10px 48px;
+    font-size: 14px;
+}
+
+/* ===========================
+   Navbar
+=========================== */
+
+header.mb-3 {
+    margin-bottom: 25px !important;
+}
+
+/* ===========================
+   Content
+=========================== */
+
+.page-content {
+    padding: 20px 25px;
+}
+
+/* ===========================
+   Card
+=========================== */
+
+.card {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, .05);
+}
+
+.card-header {
+    background: white;
+    border-bottom: 1px solid #efefef;
+}
+
+/* ===========================
+   Button
+=========================== */
+
+.btn-primary {
+    background: #435ebe;
+    border-color: #435ebe;
+}
+
+.btn-primary:hover {
+    background: #3249a8;
+}
+
+/* ===========================
+   Table
+=========================== */
+
+.table thead th {
+    background: #f7f9fc;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table-hover tbody tr:hover {
+    background: #f8fbff;
+}
+
+/* ===========================
+   Footer
+=========================== */
+
+.footer {
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #e5e7eb;
+    background: #fff;
+}
+
+.footer .container-fluid {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+/* =========================================
+   Sticky Footer
+========================================= */
+
+html,
+body {
+    height: 100%;
+}
+
+#app {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 100vh;
+}
+
+.page-content {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+    border-top: 1px solid #ececec;
+    background: #fff;
+    padding: 15px 30px;
+}
+
+/* =====================================
+   FIX MAIN LAYOUT
+===================================== */
+
+#main {
+
+    width: 100%;
+
+    max-width: 100%;
+
+}
+
+.page-content {
+
+    width: 100%;
+
+}
+
+.page-content>.row {
+
+    width: 100%;
+
+    margin: 0;
+
+}
+
+.page-content>.row>.col-12 {
+
+    padding: 0;
+
+}
+
+.raport-footer {
+
+    margin-top: 50px;
+
+    border-top: 1px solid #dee2e6;
+
+    padding-top: 12px;
+
+    font-size: 13px;
+
+    text-align: right;
+
+}
