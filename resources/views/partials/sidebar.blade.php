@@ -6,13 +6,11 @@
 
             <div class="d-flex align-items-center">
 
-                <img src="{{ asset('images/madin.png') }}"
-                    width="80"
-                    class="me-3">
+                <img src="{{ asset('images/madin.png') }}" width="80" class="me-3">
 
                 <div>
 
-                    <h3 class="mb-0 fw-bold text-primary" >
+                    <h3 class="mb-0 fw-bold text-primary">
                         SIMRAMA
                     </h3>
 
@@ -86,9 +84,9 @@
                             <a href="{{ route('tahun-ajaran.index') }}">Tahun Ajaran</a>
                         </li>
 
-                        <li class="submenu-item">
+                        {{-- <li class="submenu-item">
                             <a href="{{ route('predikat.index') }}">Predikat</a>
-                        </li>
+                        </li> --}}
 
                         <li class="submenu-item">
                             <a href="{{ route('doa-harian.index') }}">Doa Harian</a>
@@ -114,8 +112,7 @@
 
                 <li class="sidebar-item">
 
-                    <a href="{{ route('guru-mengajar.index') }}"
-                        class="sidebar-link">
+                    <a href="{{ route('guru-mengajar.index') }}" class="sidebar-link">
 
                         <i class="bi bi-person-workspace"></i>
 
@@ -133,8 +130,7 @@
 
                 <li class="sidebar-item">
 
-                    <a href="{{ route('nilai.index') }}"
-                        class="sidebar-link">
+                    <a href="{{ route('nilai.index') }}" class="sidebar-link">
 
                         <i class="bi bi-journal-check"></i>
 
@@ -146,8 +142,7 @@
 
                 <li class="sidebar-item">
 
-                    <a href="{{ route('nilai-doa.index') }}"
-                        class="sidebar-link">
+                    <a href="{{ route('nilai-doa.index') }}" class="sidebar-link">
 
                         <i class="bi bi-book-half"></i>
 
@@ -159,8 +154,7 @@
 
                 <li class="sidebar-item">
 
-                    <a href="{{ route('nilai-kepribadian.index') }}"
-                        class="sidebar-link">
+                    <a href="{{ route('nilai-kepribadian.index') }}" class="sidebar-link">
 
                         <i class="bi bi-person-heart"></i>
 
@@ -170,10 +164,21 @@
 
                 </li>
 
+                <li class="sidebar-item {{ request()->routeIs('tilawati.*') ? 'active' : '' }}">
+
+                    <a href="{{ route('tilawati.index') }}" class="sidebar-link">
+
+                        <i class="bi bi-book-half"></i>
+
+                        <span>Tilawati</span>
+
+                    </a>
+
+                </li>
+
                 <li class="sidebar-item">
 
-                    <a href="{{ route('nilai-tahfidz.index') }}"
-                        class="sidebar-link">
+                    <a href="{{ route('nilai-tahfidz.index') }}" class="sidebar-link">
 
                         <i class="bi bi-book"></i>
 
@@ -191,8 +196,7 @@
 
                 <li class="sidebar-item">
 
-                    <a href="{{ route('absensi.index') }}"
-                        class="sidebar-link">
+                    <a href="{{ route('absensi.index') }}" class="sidebar-link">
 
                         <i class="bi bi-calendar-check"></i>
 
@@ -210,8 +214,7 @@
 
                 <li class="sidebar-item">
 
-                    <a href="{{ route('rapor.index') }}"
-                        class="sidebar-link">
+                    <a href="{{ route('rapor.index') }}" class="sidebar-link">
 
                         <i class="bi bi-file-earmark-richtext"></i>
 
@@ -229,8 +232,7 @@
 
                 <li class="sidebar-item">
 
-                    <a href="{{ route('pengaturan.index') }}"
-                        class="sidebar-link">
+                    <a href="{{ route('pengaturan.index') }}" class="sidebar-link">
 
                         <i class="bi bi-gear-fill"></i>
 
@@ -242,8 +244,7 @@
 
                 <li class="sidebar-item">
 
-                    <form method="POST"
-                        action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout') }}">
 
                         @csrf
 

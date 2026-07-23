@@ -19,6 +19,8 @@ class MapelSeeder extends Seeder
             'Nahwu',
             'Shorof',
             'Bahasa Arab',
+            'Imla',
+            'Praktik Sholat',
 
         ];
 

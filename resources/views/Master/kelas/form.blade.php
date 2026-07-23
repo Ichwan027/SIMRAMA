@@ -9,7 +9,7 @@
         </label>
 
         <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
-            value="{{ old('nama', $data->nama ?? '') }}" placeholder="Contoh : Kelas 1">
+            value="{{ old('nama', $data->nama ?? '') }}" placeholder="Contoh : Kelas 3">
 
         @error('nama')
             <div class="invalid-feedback">
@@ -19,24 +19,20 @@
 
     </div>
 
+    {{-- Kode Kelas --}}
     <div class="col-md-6 mb-3">
 
         <label class="form-label">
-
             Kode Kelas
-
             <span class="text-danger">*</span>
-
         </label>
 
         <input type="text" name="kode" class="form-control @error('kode') is-invalid @enderror"
-            value="{{ old('kode', $data->kode ?? '') }}" placeholder="Contoh : KLS1">
+            value="{{ old('kode', $data->kode ?? '') }}" placeholder="Contoh : KLS3">
 
         @error('kode')
             <div class="invalid-feedback">
-
                 {{ $message }}
-
             </div>
         @enderror
 
@@ -47,6 +43,7 @@
 
         <label class="form-label">
             Wali Kelas
+            <span class="text-danger">*</span>
         </label>
 
         <select name="wali_guru_id" class="form-select @error('wali_guru_id') is-invalid @enderror">
@@ -126,19 +123,13 @@
 <div class="d-flex justify-content-end">
 
     <a href="{{ route($route . '.index') }}" class="btn btn-secondary me-2">
-
         <i class="bi bi-arrow-left"></i>
-
         Kembali
-
     </a>
 
     <button type="submit" class="btn btn-primary">
-
         <i class="bi bi-save"></i>
-
         Simpan
-
     </button>
 
 </div>

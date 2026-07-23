@@ -1,4 +1,4 @@
-<table class="identitas-table">
+<table class="table-identitas">
     <tr>
         <td width="18%">Nama</td>
         <td width="2%">:</td>

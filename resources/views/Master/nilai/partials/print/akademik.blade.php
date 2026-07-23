@@ -49,7 +49,7 @@
 
                 <td align="center">
 
-                    {{ $item->nilaiDetail->predikat->predikat }}
+                    {{ $item->nilaiDetail?->predikat?->predikat ?? '-' }}
 
                 </td>
 
@@ -64,36 +64,38 @@
             @endphp
 
         <tr>
-    <td></td>
-
-    <td align="center">
-        <b>Jumlah</b>
-    </td>
-
-    <td align="center">
-        <b>{{ $jumlah }}</b>
-    </td>
-
-    <td align="center">
-        <b>{{ terbilang($jumlah) }}</b>
-    </td>
-
-    <td></td>
-</tr>
-        </tr>
-
-        <tr>
-        
-
             <td></td>
 
             <td align="center">
-
-                <b>Peringkat</b>
-
+                <b>Jumlah</b>
             </td>
 
-            <td colspan="3"></td>
+            <td align="center">
+                <b>{{ $jumlah }}</b>
+            </td>
+
+            <td align="center">
+                <b>{{ terbilang($jumlah) }}</b>
+            </td>
+
+            <td></td>
+        </tr>
+        </tr>
+
+        <tr>
+
+
+        <tr>
+            <td colspan="2" class="text-center">
+                <strong>Peringkat</strong>
+            </td>
+
+            <td style="text-align:center; vertical-align:middle;">
+                <strong>{{ $data->peringkat ?? '-' }}</strong>
+            </td>
+
+            <td colspan="2"></td>
+        </tr>
 
         </tr>
 

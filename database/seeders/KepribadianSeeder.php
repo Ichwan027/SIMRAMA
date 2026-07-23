@@ -14,17 +14,13 @@ class KepribadianSeeder extends Seeder
     {
         $data = [
 
-            ['nama' => 'Disiplin', 'urutan' => 1],
-            ['nama' => 'Tanggung Jawab', 'urutan' => 2],
-            ['nama' => 'Kejujuran', 'urutan' => 3],
-            ['nama' => 'Kesopanan', 'urutan' => 4],
-            ['nama' => 'Kerajinan', 'urutan' => 5],
-            ['nama' => 'Kebersihan', 'urutan' => 6],
-            ['nama' => 'Kerapian', 'urutan' => 7],
-            ['nama' => 'Kerjasama', 'urutan' => 8],
-            ['nama' => 'Percaya Diri', 'urutan' => 9],
-            ['nama' => 'Akhlak', 'urutan' => 10],
+            ['nama' => 'Kedisiplinan', 'urutan' => 1],
+            
+            ['nama' => 'Kerajinan', 'urutan' => 2],
 
+            ['nama' => 'Perilaku', 'urutan' => 3],
+
+            ['nama' => 'Ketaatan', 'urutan' => 4],
         ];
 
         foreach ($data as $item) {

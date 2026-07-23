@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Core\BaseCrudController;
 use App\Http\Requests\Master\KelasRequest;
-use App\Services\KelasService;
 use App\Models\Guru;
+use App\Services\KelasService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -14,16 +14,13 @@ class KelasController extends BaseCrudController
     public function __construct(KelasService $service)
     {
         $this->service = $service;
-
-        $this->view = 'Master.kelas';
-
-        $this->route = 'kelas';
-
-        $this->title = 'Kelas';
+        $this->view    = 'Master.kelas';
+        $this->route   = 'kelas';
+        $this->title   = 'Kelas';
     }
 
     /**
-     * Daftar kelas.
+     * Daftar kelas
      */
     public function index(): View
     {
@@ -35,27 +32,26 @@ class KelasController extends BaseCrudController
     }
 
     /**
-     * Form tambah.
+     * Form tambah
      */
     public function create(): View
     {
         return view($this->view . '.create', [
             'title' => 'Tambah ' . $this->title,
             'route' => $this->route,
-            'gurus' => Guru::whereDoesntHave('kelasWali')
-                ->orderBy('nama')
-                ->get(),
+            'gurus' => Guru::orderBy('nama')->get(),
         ]);
     }
 
-    /**
-     * Simpan data.
-     */
     public function store(KelasRequest $request): RedirectResponse
     {
-        $this->service->create(
-            $request->validated()
-        );
+    //      dd(
+    //     $request->all(),
+    //     $request->validated()
+    // );
+    //     $this->service->create(
+    //         $request->validated()
+    //     );
 
         return redirect()
             ->route($this->route . '.index')
@@ -63,7 +59,7 @@ class KelasController extends BaseCrudController
     }
 
     /**
-     * Detail.
+     * Detail
      */
     public function show(int $id): View
     {
@@ -75,33 +71,20 @@ class KelasController extends BaseCrudController
     }
 
     /**
-     * Form edit.
+     * Form Edit
      */
     public function edit(int $id): View
     {
-        $kelas = $this->service->find($id);
-
-        $gurus = Guru::whereDoesntHave('kelasWali')
-            ->orWhere('id', $kelas->wali_guru_id)
-            ->orderBy('nama')
-            ->get();
-
         return view($this->view . '.edit', [
             'title' => 'Edit ' . $this->title,
             'route' => $this->route,
-            'data'  => $kelas,
-            'gurus' => $gurus,
+            'data'  => $this->service->find($id),
+            'gurus' => Guru::orderBy('nama')->get(),
         ]);
     }
 
-    /**
-     * Update.
-     */
-    public function update(
-        KelasRequest $request,
-        int $id
-    ): RedirectResponse {
-
+    public function update(KelasRequest $request, int $id): RedirectResponse
+    {
         $this->service->update(
             $id,
             $request->validated()
@@ -113,7 +96,7 @@ class KelasController extends BaseCrudController
     }
 
     /**
-     * Hapus.
+     * Hapus
      */
     public function destroy(int $id): RedirectResponse
     {

@@ -12,7 +12,7 @@
 
             </h5>
 
-            <a href="{{ route('nilai.print', $item->id) }}" target="_blank" class="btn btn-danger">
+            <a href="{{ route('nilai.cetak', $data->id) }}" target="_blank" class="btn btn-danger">
 
                 <i class="bi bi-printer"></i>
 

@@ -55,6 +55,8 @@ class DatabaseSeeder extends Seeder
 
             NilaiTahfidzSeeder::class,
 
+            TilawatiSeeder::class,
+
             AuditLogSeeder::class,
 
         ]);

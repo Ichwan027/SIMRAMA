@@ -2,16 +2,12 @@
 
     @csrf
 
-    <div class="card">
+    <div class="card mt-4">
 
-        <div class="card-header">
-
+        <div class="card-body">
             <h5>Nilai Akademik</h5>
 
-        </div>
-        <div class="card-body p-0">
-
-            <table class="table table-bordered mb-0">
+            <table class="table table-bordered align-middle mb-0">
 
                 <thead>
 
@@ -74,7 +70,7 @@
                                 @if ($item->nilaiDetail && $item->nilaiDetail->predikat)
                                     <span class="badge bg-success">
 
-                                        {{ $item->nilaiDetail->predikat->predikat }}
+                                        {{ $item->nilaiDetail?->predikat?->predikat ?? '-' }}
 
                                     </span>
                                 @else
@@ -114,6 +110,21 @@
 
         </div>
 
+        <div class="row align-items-end mt-3">
+
+            <div class="col-md-2">
+
+                <label class="form-label fw-bold">
+                    Peringkat
+                </label>
+
+                <input type="number" class="form-control" name="peringkat" min="1"
+                    value="{{ old('peringkat', $data->peringkat) }}" placeholder="1">
+
+            </div>
+
+        </div>
+
         <div class="card-footer text-end">
 
             <button class="btn btn-primary">
@@ -124,21 +135,7 @@
 
         </div>
 
-        <tr>
-            <td></td>
 
-            <td align="center">
-                <b>Peringkat</b>
-            </td>
-
-            <td align="center">
-                <b>{{ $data->peringkat ?? '-' }}</b>
-            </td>
-
-            <td></td>
-
-            <td></td>
-        </tr>
 
     </div>
 

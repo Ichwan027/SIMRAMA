@@ -1,18 +1,23 @@
-<div class="section-title">
-    D. NILAI TAHFIDZ
-</div>
+@php
+    $kiri = $nilaiTahfidzs->take(20)->values();
+    $kanan = $nilaiTahfidzs->slice(20)->values();
+@endphp
 
-<table class="nilai-table">
+<table class="table-tahfidz">
 
     <thead>
 
         <tr>
 
-            <th width="5%">No</th>
+            <th rowspan="2" width="35">NO</th>
 
-            <th>Tahfidz</th>
+            <th rowspan="2">MATERI JUZ 30<br>NAMA SURAT</th>
 
-            <th width="15%">Nilai</th>
+            <th rowspan="2" width="70">PREDIKAT</th>
+
+            <th rowspan="2">NAMA SURAT</th>
+
+            <th rowspan="2" width="70">PREDIKAT</th>
 
         </tr>
 
@@ -20,31 +25,48 @@
 
     <tbody>
 
-        @foreach($tahfidzs as $item)
+        @for($i = 0; $i < 20; $i++)
 
             <tr>
 
+                {{-- kiri --}}
                 <td class="text-center">
-
-                    {{ $loop->iteration }}
-
+                    {{ $i + 1 }}
                 </td>
 
                 <td>
 
-                    {{ $item->nama }}
+                    {{ $kiri[$i]->tahfidz->nama ?? '' }}
 
                 </td>
 
                 <td class="text-center">
 
-                    {{ $nilaiTahfidzs[$item->id]->nilai ?? '-' }}
+                    {{ $kiri[$i]->nilai ?? '' }}
+
+                </td>
+
+                {{-- kanan --}}
+                <td>
+
+                    @if(isset($kanan[$i]))
+
+                        {{ $i + 21 }}.
+                        {{ $kanan[$i]->tahfidz->nama }}
+
+                    @endif
+
+                </td>
+
+                <td class="text-center">
+
+                    {{ $kanan[$i]->nilai ?? '' }}
 
                 </td>
 
             </tr>
 
-        @endforeach
+        @endfor
 
     </tbody>
 

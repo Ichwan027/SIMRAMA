@@ -16,9 +16,12 @@ use App\Models\Kepribadian;
 use App\Models\NilaiKepribadian;
 use App\Models\NilaiDoa;
 use App\Models\Nilai;
+use App\Models\NilaiTilawati;
+use App\Models\Tilawati;
 use App\Models\Tahfidz;
 use App\Models\NilaiTahfidz;
 use App\Models\Absensi;
+use App\Models\Pengaturan;
 use App\Services\NilaiService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,7 +45,7 @@ class NilaiController extends BaseCrudController
      */
     public function index(): View
     {
-        return view($this->view . '.edit', [
+        return view($this->view . '.index', [
 
             'title' => $this->title,
 
@@ -55,6 +58,10 @@ class NilaiController extends BaseCrudController
 
     public function storeAkademik(Request $request, int $nilai)
     {
+
+        $request->validate([
+            'peringkat' => 'nullable|integer|min:1'
+        ]);
 
         foreach ($request->guru_mengajar_id as $i => $guruMengajar) {
 
@@ -88,6 +95,10 @@ class NilaiController extends BaseCrudController
 
             );
         }
+
+        Nilai::where('id', $nilai)->update([
+            'peringkat' => $request->peringkat
+        ]);
 
         return back()->with(
 
@@ -146,6 +157,8 @@ class NilaiController extends BaseCrudController
     {
         $data = $this->service->find($id);
 
+        $pengaturan = Pengaturan::first();
+
         // =========================
         // Nilai Akademik
         // =========================
@@ -190,6 +203,16 @@ class NilaiController extends BaseCrudController
             ->get()
             ->keyBy('kepribadian_id');
 
+        // =============================
+        // Nilai Tilawati
+        // =============================
+
+        $tilawatis = Tilawati::orderBy('urutan')->get();
+
+        $nilaiTilawatis = NilaiTilawati::where('nilai_id', $data->id)
+            ->get()
+            ->keyBy('tilawati_id');
+
         $tahfidzs = Tahfidz::orderBy('urutan')->get();
 
         $nilaiTahfidzs = NilaiTahfidz::where('santri_id', $data->santri_id)
@@ -232,11 +255,17 @@ class NilaiController extends BaseCrudController
 
             'nilaiKepribadians' => $nilaiKepribadians,
 
+            'tilawatis'      => $tilawatis,
+
+            'nilaiTilawatis' => $nilaiTilawatis,
+
             'tahfidzs' => $tahfidzs,
 
             'nilaiTahfidzs' => $nilaiTahfidzs,
 
             'absensi' => $absensi,
+
+            'pengaturan'   => $pengaturan,
 
         ]);
     }
@@ -352,6 +381,41 @@ class NilaiController extends BaseCrudController
         );
     }
 
+    public function simpanNilaiTilawati(Request $request, int $id)
+    {
+        $nilai = Nilai::findOrFail($id);
+
+        foreach ($request->nilai as $tilawatiId => $nilaiHuruf) {
+
+            if (empty($nilaiHuruf)) {
+                continue;
+            }
+
+            NilaiTilawati::updateOrCreate(
+
+                [
+
+                    'nilai_id' => $nilai->id,
+
+                    'tilawati_id' => $tilawatiId,
+
+                ],
+
+                [
+
+                    'nilai' => $nilaiHuruf,
+
+                ]
+
+            );
+        }
+
+        return back()->with(
+            'success',
+            'Nilai Tilawati berhasil disimpan.'
+        );
+    }
+
     public function simpanNilaiTahfidz(Request $request, int $id)
     {
         $nilai = Nilai::findOrFail($id);
@@ -461,6 +525,7 @@ class NilaiController extends BaseCrudController
 
     public function cetak(int $id)
     {
+
         /*
     |--------------------------------------------------------------------------
     | Data Raport
@@ -468,11 +533,14 @@ class NilaiController extends BaseCrudController
     */
 
         $data = Nilai::with([
-            'santri.kelas',
+
+            'santri.kelas.waliGuru',
             'tahunAjaran',
             'semester',
         ])->findOrFail($id);
+        // dd($data->santri->kelas);
 
+        $pengaturan = Pengaturan::first();
         /*
     |--------------------------------------------------------------------------
     | Nilai Akademik
@@ -521,6 +589,12 @@ class NilaiController extends BaseCrudController
             ->get()
             ->keyBy('kepribadian_id');
 
+
+
+        $nilaiTilawatis = NilaiTilawati::with('tilawati')
+            ->where('nilai_id', $data->id)
+            ->orderBy('tilawati_id')
+            ->get();
         /*
     |--------------------------------------------------------------------------
     | Tahfidz
@@ -570,38 +644,12 @@ class NilaiController extends BaseCrudController
             'nilaiDoas',
             'kepribadians',
             'nilaiKepribadians',
+            'nilaiTilawatis',
             'tahfidzs',
             'nilaiTahfidzs',
-            'absensi'
+            'absensi',
+            'pengaturan'
         ));
-
-
-        /*
-    |--------------------------------------------------------------------------
-    | Generate PDF
-    |--------------------------------------------------------------------------
-    */
-
-        $pdf = Pdf::loadView(
-            'Master.nilai.print',
-            compact(
-                'data',
-                'guruMengajars',
-                'doaHarians',
-                'nilaiDoas',
-                'kepribadians',
-                'nilaiKepribadians',
-                'tahfidzs',
-                'nilaiTahfidzs',
-                'absensi'
-            )
-        );
-
-        $pdf->setPaper([0, 0, 595.28, 935.43], 'portrait');
-
-        return $pdf->stream(
-            'Raport-' . $data->santri->nama . '.pdf'
-        );
     }
 
     private function terbilang(int $nilai): string

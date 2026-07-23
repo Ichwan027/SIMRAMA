@@ -5,19 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class TahunAjaran extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'tahun_ajarans';
 
     protected $fillable = [
+
         'tahun',
+
+        'urutan',
+
         'aktif',
+
     ];
 
     protected $casts = [
+
         'aktif' => 'boolean',
+
     ];
 
     public function guruMengajars()

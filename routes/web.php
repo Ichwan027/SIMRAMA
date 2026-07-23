@@ -20,6 +20,8 @@ use App\Http\Controllers\Master\NilaiController;
 use App\Http\Controllers\Master\NilaiDoaController;
 use App\Http\Controllers\Master\NilaiKepribadianController;
 use App\Http\Controllers\Master\NilaiTahfidzController;
+use App\Http\Controllers\Penilaian\NilaiTilawatiController;
+use App\Http\Controllers\Master\TilawatiController;
 use App\Http\Controllers\Master\AbsensiController;
 use App\Http\Controllers\Master\PengaturanController;
 
@@ -64,6 +66,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('predikat', PredikatController::class);
     Route::resource('doa-harian', DoaHarianController::class);
     Route::resource('kepribadian', KepribadianController::class);
+
+    Route::resource('tilawati', TilawatiController::class);
+    Route::middleware(['auth'])->group(function () {
+
+        Route::resource('guru', GuruController::class);
+
+        Route::resource('kelas', KelasController::class);
+
+        Route::resource('mapel', MapelController::class);
+
+        Route::resource('doa-harian', DoaHarianController::class);
+
+        Route::resource('kepribadian', KepribadianController::class);
+
+        Route::resource('tahfidz', TahfidzController::class);
+
+        Route::resource('tilawati', TilawatiController::class);
+    });
+
+    Route::post(
+        '/nilai/{id}/tilawati',
+        [NilaiController::class, 'simpanNilaiTilawati']
+    )->name('nilai.tilawati');
+
     Route::resource('tahfidz', TahfidzController::class);
     Route::resource('nilai', NilaiController::class);
     Route::post(
@@ -92,6 +118,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         '/nilai/{id}/catatan',
         [NilaiController::class, 'simpanCatatan']
     )->name('nilai.catatan');
+
+    Route::get(
+        '/nilai/{id}/print',
+        [NilaiController::class, 'cetak']
+    )->name('nilai.print');
 
 
 

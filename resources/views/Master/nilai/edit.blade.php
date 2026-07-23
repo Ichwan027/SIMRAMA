@@ -13,13 +13,13 @@
 
             @include('Master.nilai.partials.kepribadian')
 
+            @include('Master.nilai.partials.tilawati') 
+
             @include('Master.nilai.partials.tahfidz')
 
             @include('Master.nilai.partials.absensi')
 
             @include('Master.nilai.partials.catatan')
-
-            @include('Master.nilai.print')
 
         </div>
 

@@ -13,8 +13,13 @@ class Mapel extends Model
     protected $table = 'mapels';
 
     protected $fillable = [
+
         'nama',
+
+        'urutan',
+
         'aktif',
+
     ];
 
     protected $casts = [

@@ -1,50 +1,79 @@
-<table class="signature">
+@php
+    use Carbon\Carbon;
+
+    Carbon::setLocale('id');
+
+    $tanggalCetak = now()->translatedFormat('d F Y');
+@endphp
+
+<table class="table-ttd">
 
     <tr>
 
-        <td>
+        {{-- ORANG TUA --}}
+        <td class="ttd">
 
-            Mengetahui,
+            <div class="tanggal">&nbsp;</div>
 
-            <br>
+            <div class="jabatan">
+                Orang Tua / Wali Santri
+            </div>
 
-            Kepala Madrasah
+            <div class="space"></div>
 
-            <div class="ttd-space"></div>
+            <div class="garis"></div>
 
-            <strong>
-
-                ______________________
-
-            </strong>
-
-        </td>
-
-        <td>
+            <div class="nama">
+                &nbsp;
+            </div>
 
         </td>
 
-        <td>
+        {{-- WALI KELAS --}}
+        <td class="ttd">
 
-            Wali Kelas
+            <div class="tanggal">&nbsp;</div>
 
-            <div class="ttd-space"></div>
+            <div class="jabatan">
+                Wali Kelas
+            </div>
 
-            <strong>
+            <div class="space"></div>
 
-                ______________________
+            <div class="garis"></div>
 
-            </strong>
+            <div class="nama">
+                {{ $data->santri->kelas->waliGuru->nama ?? '-' }}
+            </div>
+
+        </td>
+
+        {{-- KEPALA MADRASAH --}}
+        <td class="ttd">
+
+            <div class="tanggal">
+                Surabaya, {{ $tanggalCetak }}
+            </div>
+
+            <div class="jabatan">
+                Kepala Madrasah
+            </div>
+
+            <div class="space"></div>
+
+            <div class="garis"></div>
+
+            <div class="nama">
+                {{ $pengaturan->kepala_madrasah }}
+
+                @if (!empty($pengaturan->nip_kepala))
+                    <br>
+                    NIP. {{ $pengaturan->nip_kepala }}
+                @endif
+            </div>
 
         </td>
 
     </tr>
 
 </table>
-
-<div class="footer">
-
-    Nomor Raport :
-    <strong>{{ $data->nomor_raport }}</strong>
-
-</div>
