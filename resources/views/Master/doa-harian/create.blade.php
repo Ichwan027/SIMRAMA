@@ -11,7 +11,7 @@
 
         @csrf
 
-        @include('Master.tahun-ajaran.partials')
+        @include('Master.kepribadian.partials')
 
         <button class="btn btn-primary">
 

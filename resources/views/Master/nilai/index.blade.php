@@ -1,85 +1,90 @@
 @extends('layouts.dashboard')
 
 @section('content')
-
-<div class="page-heading">
-    <h3>{{ $title }}</h3>
-</div>
-
-<div class="card">
-
-    <div class="card-header d-flex justify-content-between">
-
-        <h5 class="mb-0">Daftar Nilai Akademik</h5>
-
+    <div class="page-heading">
+        <h3>{{ $title }}</h3>
     </div>
 
-    <div class="card-body">
+    <div class="card">
 
-        <div class="table-responsive">
+        <div class="d-flex justify-content-between mb-3">
 
-            <table class="table table-bordered table-striped">
+            
 
-                <thead>
+            <form action="{{ route('nilai.generate') }}" method="POST">
+                @csrf
 
-                    <tr>
-                        <th width="60">No</th>
-                        <th>Nama Santri</th>
-                        <th>Kelas</th>
-                        <th width="170">Aksi</th>
-                    </tr>
+                <button type="submit" class="btn btn-success" onclick="return confirm('Generate data nilai semester aktif?')">
 
-                </thead>
+                    <i class="bi bi-arrow-repeat"></i>
+                    Generate Nilai
 
-                <tbody>
-
-                    @forelse($data as $item)
-
-                        <tr>
-
-                            <td>{{ $loop->iteration + ($data->firstItem() - 1) }}</td>
-
-                            <td>{{ $item->santri->nama }}</td>
-
-                            <td>{{ $item->santri->kelas->nama }}</td>
-
-                            <td>
-
-                                <a href="{{ route('nilai.edit', $item->id) }}"
-                                   class="btn btn-warning btn-sm">
-                                    Edit
-                                </a>
-
-                                <a href="{{ route('nilai.print', $item->id) }}"
-                                   class="btn btn-danger btn-sm"
-                                   target="_blank">
-                                    Cetak
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-                    @empty
-
-                        <tr>
-                            <td colspan="4" class="text-center">
-                                Tidak ada data
-                            </td>
-                        </tr>
-
-                    @endforelse
-
-                </tbody>
-
-            </table>
+                </button>
+            </form>
 
         </div>
 
-        {{ $data->links() }}
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-striped">
+
+                    <thead>
+
+                        <tr>
+                            <th width="60">No</th>
+                            <th>Nama Santri</th>
+                            <th>Kelas</th>
+                            <th width="170">Aksi</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @forelse($data as $item)
+                            <tr>
+
+                                <td>{{ $loop->iteration + ($data->firstItem() - 1) }}</td>
+
+                                <td>{{ $item->nama }}</td>
+
+                                <td>{{ $item->kelas?->nama }}</td>
+
+                                <td>
+
+                                    <a href="{{ route('nilai.edit', $item->id) }}" class="btn btn-warning btn-sm">
+                                        Edit
+                                    </a>
+
+                                    <a href="{{ route('nilai.print', $item->id) }}" class="btn btn-danger btn-sm"
+                                        target="_blank">
+                                        Cetak
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    Tidak ada data
+                                </td>
+                            </tr>
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {{ $data->links() }}
+
+        </div>
 
     </div>
-
-</div>
-
 @endsection

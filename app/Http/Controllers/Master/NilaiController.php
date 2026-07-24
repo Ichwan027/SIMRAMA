@@ -109,6 +109,71 @@ class NilaiController extends BaseCrudController
         );
     }
 
+    public function generate(): RedirectResponse
+    {
+        $semester = Semester::where('aktif', 1)->firstOrFail();
+        $tahun    = TahunAjaran::where('aktif', 1)->firstOrFail();
+
+        $santris = Santri::orderBy('nama')->get();
+
+        $jumlah = 0;
+
+        foreach ($santris as $santri) {
+
+            $ada = Nilai::where('santri_id', $santri->id)
+                ->where('tahun_ajaran_id', $tahun->id)
+                ->where('semester_id', $semester->id)
+                ->exists();
+
+            if ($ada) {
+                continue;
+            }
+
+            Nilai::create([
+                'santri_id'        => $santri->id,
+                'tahun_ajaran_id'  => $tahun->id,
+                'semester_id'      => $semester->id,
+                'nomor_raport'     => $this->buatNomorRaport(
+                    $santri,
+                    $semester,
+                    $tahun
+                ),
+            ]);
+
+            $jumlah++;
+        }
+
+        return back()->with(
+            'success',
+            "{$jumlah} data nilai berhasil dibuat."
+        );
+    }
+
+    private function buatNomorRaport(
+        Santri $santri,
+        Semester $semester,
+        TahunAjaran $tahun
+    ): string {
+
+        $semesterKode = strtoupper($semester->nama);
+
+        $kelas = strtoupper(
+            str_replace(' ', '', $santri->kelas->nama)
+        );
+
+        $tahun2Digit = substr($tahun->tahun, 2, 2);
+
+        $last = Nilai::count() + 1;
+
+        return sprintf(
+            'RPT-%s-%s-%s-%04d',
+            $semesterKode,
+            $kelas,
+            $tahun2Digit,
+            $last
+        );
+    }
+
     /**
      * Form tambah.
      */
@@ -155,7 +220,43 @@ class NilaiController extends BaseCrudController
      */
     public function edit(int $id): View
     {
-        $data = $this->service->find($id);
+        // =========================
+        // Semester & Tahun Aktif
+        // =========================
+        $semester = Semester::where('aktif', 1)->firstOrFail();
+        $tahun    = TahunAjaran::where('aktif', 1)->firstOrFail();
+
+        // =========================
+        // Pastikan santri ada
+        // =========================
+        $santri = Santri::with('kelas')->findOrFail($id);
+
+        // =========================
+        // Ambil / buat data nilai
+        // =========================
+        $data = Nilai::firstOrCreate(
+            [
+                'santri_id'       => $santri->id,
+                'tahun_ajaran_id' => $tahun->id,
+                'semester_id'     => $semester->id,
+            ],
+            [
+                'nomor_raport' => $this->buatNomorRaport(
+                    $santri,
+                    $semester,
+                    $tahun
+                ),
+            ]
+        );
+
+        $data->load([
+            'santri.kelas',
+            'tahunAjaran',
+            'semester',
+            'details.guruMengajar.guru',
+            'details.guruMengajar.mapel',
+            'details.predikat',
+        ]);
 
         $pengaturan = Pengaturan::first();
 
@@ -163,21 +264,18 @@ class NilaiController extends BaseCrudController
         // Nilai Akademik
         // =========================
         $guruMengajars = GuruMengajar::with([
-
             'guru',
-
             'mapel',
+            'nilaiDetail' => function ($q) use ($data) {
 
-            'nilaiDetail' => function ($q) use ($id) {
-
-                $q->where('nilai_id', $id)
+                $q->where('nilai_id', $data->id)
                     ->with('predikat');
             }
 
         ])
-            ->where('kelas_id', $data->santri->kelas_id)
-            ->where('tahun_ajaran_id', $data->tahun_ajaran_id)
-            ->where('semester_id', $data->semester_id)
+            ->where('kelas_id', $santri->kelas_id)
+            ->where('tahun_ajaran_id', $tahun->id)
+            ->where('semester_id', $semester->id)
             ->orderBy('mapel_id')
             ->get();
 
@@ -186,46 +284,51 @@ class NilaiController extends BaseCrudController
         // =========================
         $doaHarians = DoaHarian::orderBy('urutan')->get();
 
-        $nilaiDoas = NilaiDoa::where('santri_id', $data->santri_id)
-            ->where('tahun_ajaran_id', $data->tahun_ajaran_id)
-            ->where('semester_id', $data->semester_id)
+        $nilaiDoas = NilaiDoa::where('santri_id', $santri->id)
+            ->where('tahun_ajaran_id', $tahun->id)
+            ->where('semester_id', $semester->id)
             ->get()
             ->keyBy('doa_harian_id');
 
         // =========================
-        // Nilai Kepribadian
+        // Kepribadian
         // =========================
         $kepribadians = Kepribadian::orderBy('urutan')->get();
 
-        $nilaiKepribadians = NilaiKepribadian::where('santri_id', $data->santri_id)
-            ->where('tahun_ajaran_id', $data->tahun_ajaran_id)
-            ->where('semester_id', $data->semester_id)
+        $nilaiKepribadians = NilaiKepribadian::where('santri_id', $santri->id)
+            ->where('tahun_ajaran_id', $tahun->id)
+            ->where('semester_id', $semester->id)
             ->get()
             ->keyBy('kepribadian_id');
 
-        // =============================
-        // Nilai Tilawati
-        // =============================
-
+        // =========================
+        // Tilawati
+        // =========================
         $tilawatis = Tilawati::orderBy('urutan')->get();
 
         $nilaiTilawatis = NilaiTilawati::where('nilai_id', $data->id)
             ->get()
             ->keyBy('tilawati_id');
 
+        // =========================
+        // Tahfidz
+        // =========================
         $tahfidzs = Tahfidz::orderBy('urutan')->get();
 
-        $nilaiTahfidzs = NilaiTahfidz::where('santri_id', $data->santri_id)
-            ->where('tahun_ajaran_id', $data->tahun_ajaran_id)
-            ->where('semester_id', $data->semester_id)
+        $nilaiTahfidzs = NilaiTahfidz::where('santri_id', $santri->id)
+            ->where('tahun_ajaran_id', $tahun->id)
+            ->where('semester_id', $semester->id)
             ->get()
             ->keyBy('tahfidz_id');
 
+        // =========================
+        // Absensi
+        // =========================
         $absensi = Absensi::firstOrCreate(
             [
-                'santri_id'       => $data->santri_id,
-                'tahun_ajaran_id' => $data->tahun_ajaran_id,
-                'semester_id'     => $data->semester_id,
+                'santri_id'       => $santri->id,
+                'tahun_ajaran_id' => $tahun->id,
+                'semester_id'     => $semester->id,
             ],
             [
                 'sakit' => 0,
@@ -234,39 +337,21 @@ class NilaiController extends BaseCrudController
             ]
         );
 
-        // =========================
-        // View
-        // =========================
         return view($this->view . '.edit', [
-
-            'title' => 'Isi Raport',
-
-            'route' => $this->route,
-
-            'data' => $data,
-
-            'guruMengajars' => $guruMengajars,
-
-            'doaHarians' => $doaHarians,
-
-            'nilaiDoas' => $nilaiDoas,
-
-            'kepribadians' => $kepribadians,
-
-            'nilaiKepribadians' => $nilaiKepribadians,
-
-            'tilawatis'      => $tilawatis,
-
-            'nilaiTilawatis' => $nilaiTilawatis,
-
-            'tahfidzs' => $tahfidzs,
-
-            'nilaiTahfidzs' => $nilaiTahfidzs,
-
-            'absensi' => $absensi,
-
-            'pengaturan'   => $pengaturan,
-
+            'title'                => 'Isi Raport',
+            'route'                => $this->route,
+            'data'                 => $data,
+            'guruMengajars'        => $guruMengajars,
+            'doaHarians'           => $doaHarians,
+            'nilaiDoas'            => $nilaiDoas,
+            'kepribadians'         => $kepribadians,
+            'nilaiKepribadians'    => $nilaiKepribadians,
+            'tilawatis'            => $tilawatis,
+            'nilaiTilawatis'       => $nilaiTilawatis,
+            'tahfidzs'             => $tahfidzs,
+            'nilaiTahfidzs'        => $nilaiTahfidzs,
+            'absensi'              => $absensi,
+            'pengaturan'           => $pengaturan,
         ]);
     }
 

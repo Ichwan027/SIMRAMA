@@ -3,6 +3,7 @@
 namespace App\Core\Repositories;
 
 use App\Models\Nilai;
+use App\Models\Santri;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class NilaiRepository extends BaseRepository
@@ -15,16 +16,10 @@ class NilaiRepository extends BaseRepository
     /**
      * Load seluruh relasi.
      */
-    public function paginate(
-        int $perPage = 10
-    ): LengthAwarePaginator {
-        return $this->model
-            ->with([
-                'santri.kelas',
-                'tahunAjaran',
-                'semester',
-            ])
-            ->latest()
+    public function paginate(int $perPage = 10): LengthAwarePaginator
+    {
+        return Santri::with('kelas')
+            ->orderBy('nama')
             ->paginate($perPage);
     }
 

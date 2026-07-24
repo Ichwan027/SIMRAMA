@@ -11,13 +11,13 @@
 
                     <th width="250">
 
-                        Tahun Ajaran
+                        Doa Harian
 
                     </th>
 
                     <td>
 
-                        {{ $data->tahun }}
+                        {{ $data->nama }}
 
                     </td>
 

@@ -2,64 +2,72 @@
 
 namespace App\Http\Controllers\Master;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Core\BaseCrudController;
+use App\Services\AbsensiService;
+use App\Models\Santri;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
-class AbsensiController extends Controller
+class AbsensiController extends BaseCrudController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(AbsensiService $service)
     {
-        //
+        $this->service = $service;
+
+        $this->view  = 'Master.absensi';
+        $this->route = 'absensi';
+        $this->title = 'Absensi Santri';
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Daftar seluruh santri
      */
-    public function create()
+    public function index(): View
     {
-        //
+        return view($this->view . '.index', [
+            'title' => $this->title,
+            'route' => $this->route,
+            'data'  => $this->service->paginate(10),
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Form isi absensi
      */
-    public function store(Request $request)
+    public function edit(int $id): View
     {
-        //
+        $santri = Santri::with('kelas')->findOrFail($id);
+
+        $absensi = $this->service->findOrCreateBySantri($id);
+
+        return view($this->view . '.edit', [
+            'title'    => 'Isi Absensi',
+            'route'    => $this->route,
+            'santri'   => $santri,
+            'absensi'  => $absensi,
+        ]);
     }
 
     /**
-     * Display the specified resource.
+     * Simpan absensi
      */
-    public function show(string $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
-        //
-    }
+        $request->validate([
+            'sakit' => ['required', 'integer', 'min:0'],
+            'izin'  => ['required', 'integer', 'min:0'],
+            'alpha' => ['required', 'integer', 'min:0'],
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $this->service->updateAbsensi($id, $request->only([
+            'sakit',
+            'izin',
+            'alpha',
+        ]));
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()
+            ->route($this->route . '.index')
+            ->with('success', 'Absensi berhasil disimpan.');
     }
 }

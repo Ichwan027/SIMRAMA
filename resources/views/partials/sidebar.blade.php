@@ -122,12 +122,6 @@
 
                 </li>
 
-                <li class="sidebar-title">
-
-                    PENILAIAN
-
-                </li>
-
                 <li class="sidebar-item">
 
                     <a href="{{ route('nilai.index') }}" class="sidebar-link">
@@ -138,9 +132,9 @@
 
                     </a>
 
-                </li>
+                
 
-                <li class="sidebar-item">
+                {{-- <li class="sidebar-item">
 
                     <a href="{{ route('nilai-doa.index') }}" class="sidebar-link">
 
@@ -186,9 +180,9 @@
 
                     </a>
 
-                </li>
+                </li> --}}
 
-                <li class="sidebar-title">
+                {{-- <li class="sidebar-title">
 
                     ABSENSI
 
@@ -204,9 +198,9 @@
 
                     </a>
 
-                </li>
+                </li> --}}
 
-                <li class="sidebar-title">
+                {{-- <li class="sidebar-title">
 
                     RAPOR
 
@@ -222,9 +216,9 @@
 
                     </a>
 
-                </li>
+                </li> --}}
 
-                <li class="sidebar-title">
+                {{-- <li class="sidebar-title">
 
                     SISTEM
 
@@ -240,7 +234,7 @@
 
                     </a>
 
-                </li>
+                </li> --}}
 
                 <li class="sidebar-item">
 
@@ -248,7 +242,9 @@
 
                         @csrf
 
-                        <button class="sidebar-link border-0 bg-transparent w-100 text-start">
+                        <button 
+                        type="submit"
+                        class="sidebar-link border-0 bg-transparent w-100 text-start">
 
                             <i class="bi bi-box-arrow-right"></i>
 

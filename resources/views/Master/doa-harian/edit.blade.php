@@ -13,7 +13,7 @@
 
         @method('PUT')
 
-        @include('Master.tahun-ajaran.partials')
+        @include('Master.doa-harian.partials')
 
         <button class="btn btn-warning">
 

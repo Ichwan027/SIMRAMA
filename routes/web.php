@@ -66,7 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('predikat', PredikatController::class);
     Route::resource('doa-harian', DoaHarianController::class);
     Route::resource('kepribadian', KepribadianController::class);
-
+    Route::resource('absensi', AbsensiController::class);
     Route::resource('tilawati', TilawatiController::class);
     Route::middleware(['auth'])->group(function () {
 
@@ -84,6 +84,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::resource('tilawati', TilawatiController::class);
     });
+
+    Route::get(
+        'nilai/santri/{santri}',
+        [NilaiController::class, 'editBySantri']
+    )->name('nilai.edit-santri');
+
+    Route::post(
+        'nilai/generate',
+        [NilaiController::class, 'generate']
+    )->name('nilai.generate');
 
     Route::post(
         '/nilai/{id}/tilawati',
