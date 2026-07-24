@@ -132,9 +132,9 @@
 
                     </a>
 
-                
 
-                {{-- <li class="sidebar-item">
+
+                    {{-- <li class="sidebar-item">
 
                     <a href="{{ route('nilai-doa.index') }}" class="sidebar-link">
 
@@ -182,7 +182,7 @@
 
                 </li> --}}
 
-                {{-- <li class="sidebar-title">
+                    {{-- <li class="sidebar-title">
 
                     ABSENSI
 
@@ -200,7 +200,7 @@
 
                 </li> --}}
 
-                {{-- <li class="sidebar-title">
+                    {{-- <li class="sidebar-title">
 
                     RAPOR
 
@@ -218,7 +218,7 @@
 
                 </li> --}}
 
-                {{-- <li class="sidebar-title">
+                    {{-- <li class="sidebar-title">
 
                     SISTEM
 
@@ -236,15 +236,22 @@
 
                 </li> --}}
 
+                    @if (auth()->user()->isAdmin())
+                <li class="sidebar-item {{ request()->routeIs('user.*') ? 'active' : '' }}">
+                    <a href="{{ route('user.index') }}" class="sidebar-link">
+                        <i class="bi bi-people-fill"></i>
+                        <span>Kelola User</span>
+                    </a>
+                </li>
+                @endif
+
                 <li class="sidebar-item">
 
                     <form method="POST" action="{{ route('logout') }}">
 
                         @csrf
 
-                        <button 
-                        type="submit"
-                        class="sidebar-link border-0 bg-transparent w-100 text-start">
+                        <button type="submit" class="sidebar-link border-0 bg-transparent w-100 text-start">
 
                             <i class="bi bi-box-arrow-right"></i>
 

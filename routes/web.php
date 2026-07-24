@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\Master\UserController;
 use App\Http\Controllers\Master\GuruController;
 use App\Http\Controllers\Master\SantriController;
 use App\Http\Controllers\Master\KelasController;
@@ -57,6 +58,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     |--------------------------------------------------------------------------
     */
 
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::resource('user', UserController::class);
+    });
     Route::resource('guru', GuruController::class);
     Route::resource('santri', SantriController::class);
     Route::resource('kelas', KelasController::class);
