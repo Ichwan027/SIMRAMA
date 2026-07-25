@@ -1,13 +1,17 @@
 {
-    "files.associations": {
-        "*.blade.php": "blade"
-    },
-
-    "[blade]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-
-    "javascript.validate.enable": false,
-
-    "typescript.validate.enable": false
+  "files.associations": {
+    "*.blade.php": "blade"
+  },
+  "[blade]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.validate.enable": false,
+  "typescript.validate.enable": false,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggestSelection": "first",
+  "editor.tabCompletion": "on"
 }

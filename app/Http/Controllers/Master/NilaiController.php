@@ -317,6 +317,7 @@ class NilaiController extends BaseCrudController
 
         $nilaiTahfidzs = NilaiTahfidz::where('santri_id', $santri->id)
             ->where('tahun_ajaran_id', $tahun->id)
+            
             ->where('semester_id', $semester->id)
             ->get()
             ->keyBy('tahfidz_id');
