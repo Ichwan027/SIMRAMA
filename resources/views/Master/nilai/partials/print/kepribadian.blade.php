@@ -1,51 +1,35 @@
-<div class="section-title">
-    C. NILAI KEPRIBADIAN
-</div>
-
-<table class="nilai-table">
-
+<table class="table-side">
     <thead>
-
         <tr>
-
-            <th width="5%">No</th>
-
-            <th>Kepribadian</th>
-
-            <th width="15%">Nilai</th>
+            <th colspan="2">
+                PERILAKU MURID
+            </th>
 
         </tr>
-
+ <tr>
+            <th colspan="2" class="table-side-spacer"></th>
+        </tr>
     </thead>
 
     <tbody>
 
-        @foreach($kepribadians as $item)
-
+        @foreach ($kepribadians as $item)
             <tr>
 
-                <td class="text-center">
+                <td width="75%">
 
-                    {{ $loop->iteration }}
-
-                </td>
-
-                <td>
-
+                    {{ $loop->iteration }}.
                     {{ $item->nama }}
 
                 </td>
 
-                <td class="text-center">
+                <td class="text-center" width="25%">
 
-                    {{ $nilaiKepribadians[$item->id]->nilai ?? '-' }}
+                    {{ $nilaiKepribadians[$item->id]->predikat ?? '-' }}
 
                 </td>
 
             </tr>
-
         @endforeach
-
     </tbody>
-
 </table>

@@ -1,27 +1,39 @@
-<table class="table-identitas">
-    <tr>
-        <td width="18%">Nama</td>
-        <td width="2%">:</td>
-        <td width="30%">{{ $data->santri->nama }}</td>
+<table class="identitas">
 
-        <td width="18%">Semester</td>
-        <td width="2%">:</td>
-        <td width="30%">
-            {{ $data->semester->nama }}
-        </td>
+    <tr>
+
+        <td width="18%">NAMA MURID</td>
+
+        <td width="32%">: {{ $data->santri->nama }}</td>
+
+        <td width="18%">NO. INDUK</td>
+
+        <td>: {{ $data->santri->nomor_induk }}</td>
+
     </tr>
 
     <tr>
-        <td>Kelas / Jilid</td>
-        <td>:</td>
-        <td>
-            {{ $data->santri->kelas->nama }}
-        </td>
 
-        <td>Tahun Ajaran</td>
-        <td>:</td>
-        <td>
-            {{ $data->tahunAjaran->tahun }}
-        </td>
+        <td>KELAS</td>
+
+        <td>: {{ $data->santri->kelas->nama }}</td>
+
+        <td>IMDA</td>
+
+        <td>: {{ $data->semester->nama }}</td>
+
     </tr>
+
+    <tr>
+
+        <td>TAHUN PELAJARAN</td>
+
+        <td>: {{ $data->tahunAjaran->tahun }}</td>
+
+        <td></td>
+
+        <td></td>
+
+    </tr>
+
 </table>

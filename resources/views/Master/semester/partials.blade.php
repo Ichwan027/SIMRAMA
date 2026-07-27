@@ -6,23 +6,23 @@
 
             <label class="form-label">
 
-                Nama Semester
+                IMDA
 
             </label>
 
             <select name="nama" class="form-select @error('nama') is-invalid @enderror">
 
-                <option value="">-- Pilih Semester --</option>
+                <option value="">-- Pilih Imda --</option>
 
-                <option value="Ganjil" {{ old('nama', $data->nama ?? '') == 'Ganjil' ? 'selected' : '' }}>
+                <option value="Ganjil" {{ old('nama', $data->nama ?? '') == '1' ? 'selected' : '' }}>
 
-                    Ganjil
+                    1 (Satu)
 
                 </option>
 
-                <option value="Genap" {{ old('nama', $data->nama ?? '') == 'Genap' ? 'selected' : '' }}>
+                <option value="Genap" {{ old('nama', $data->nama ?? '') == '2' ? 'selected' : '' }}>
 
-                    Genap
+                    2 (Dua)
 
                 </option>
 

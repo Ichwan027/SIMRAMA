@@ -19,7 +19,7 @@
 
                         <i class="bi bi-plus-circle"></i>
 
-                        Tambah Semester
+                        Tambah Imda
 
                     </a>
 
@@ -47,7 +47,7 @@
 
                                 <th width="60">No</th>
 
-                                <th>Nama Semester</th>
+                                <th>IMDA</th>
 
                                 <th width="100">Urutan</th>
 

@@ -6,7 +6,7 @@
 
             <div class="d-flex align-items-center">
 
-                <img src="{{ asset('images/madin.png') }}" width="80" class="me-3">
+                <img src="{{ asset('images/logo-pondok.png') }}" width="80" class="me-3">
 
                 <div>
 
@@ -77,7 +77,7 @@
                         </li>
 
                         <li class="submenu-item">
-                            <a href="{{ route('semester.index') }}">Semester</a>
+                            <a href="{{ route('semester.index') }}">iMDA</a>
                         </li>
 
                         <li class="submenu-item">
@@ -88,17 +88,17 @@
                             <a href="{{ route('predikat.index') }}">Predikat</a>
                         </li> --}}
 
-                        <li class="submenu-item">
+                        {{-- <li class="submenu-item">
                             <a href="{{ route('doa-harian.index') }}">Doa Harian</a>
-                        </li>
+                        </li> --}}
 
                         <li class="submenu-item">
                             <a href="{{ route('kepribadian.index') }}">Kepribadian</a>
                         </li>
 
-                        <li class="submenu-item">
+                        {{-- <li class="submenu-item">
                             <a href="{{ route('tahfidz.index') }}">Tahfidz</a>
-                        </li>
+                        </li> --}}
 
                     </ul>
 

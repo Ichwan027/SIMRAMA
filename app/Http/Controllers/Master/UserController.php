@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Core\BaseCrudController;
 use App\Http\Requests\Master\UserRequest;
+use App\Models\Guru;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -37,8 +38,11 @@ class UserController extends BaseCrudController
     public function create(): View
     {
         return view($this->view . '.create', [
-            'title' => 'Tambah ' . $this->title,
-            'route' => $this->route,
+            'title'  => 'Tambah ' . $this->title,
+            'route'  => $this->route,
+            'gurus'  => Guru::where('status', true)
+                ->orderBy('nama')
+                ->get(),
         ]);
     }
 
@@ -62,9 +66,12 @@ class UserController extends BaseCrudController
     public function edit(int $id): View
     {
         return view($this->view . '.edit', [
-            'title' => 'Edit ' . $this->title,
-            'route' => $this->route,
-            'data'  => $this->service->find($id),
+            'title'  => 'Edit ' . $this->title,
+            'route'  => $this->route,
+            'data'   => $this->service->find($id),
+            'gurus'  => Guru::where('status', true)
+                ->orderBy('nama')
+                ->get(),
         ]);
     }
 

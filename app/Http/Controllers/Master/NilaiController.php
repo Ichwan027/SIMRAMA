@@ -21,11 +21,13 @@ use App\Models\Tilawati;
 use App\Models\Tahfidz;
 use App\Models\NilaiTahfidz;
 use App\Models\Absensi;
+use App\Models\MasterCatatan;
 use App\Models\Pengaturan;
 use App\Services\NilaiService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Helpers\AccessHelper;
 
 class NilaiController extends BaseCrudController
 {
@@ -63,6 +65,10 @@ class NilaiController extends BaseCrudController
             'peringkat' => 'nullable|integer|min:1'
         ]);
 
+        $nilai = Nilai::with('santri')->findOrFail($nilai);
+
+        $this->authorizeNilai($nilai);
+
         foreach ($request->guru_mengajar_id as $i => $guruMengajar) {
 
             $angka = (int)$request->nilai_angka[$i];
@@ -75,7 +81,7 @@ class NilaiController extends BaseCrudController
 
                 [
 
-                    'nilai_id' => $nilai,
+                    'nilai_id' => $nilai->id,
 
                     'guru_mengajar_id' => $guruMengajar,
 
@@ -96,7 +102,7 @@ class NilaiController extends BaseCrudController
             );
         }
 
-        Nilai::where('id', $nilai)->update([
+        $nilai->update([
             'peringkat' => $request->peringkat
         ]);
 
@@ -230,6 +236,7 @@ class NilaiController extends BaseCrudController
         // Pastikan santri ada
         // =========================
         $santri = Santri::with('kelas')->findOrFail($id);
+        $this->authorizeSantri($santri);
 
         // =========================
         // Ambil / buat data nilai
@@ -317,7 +324,7 @@ class NilaiController extends BaseCrudController
 
         $nilaiTahfidzs = NilaiTahfidz::where('santri_id', $santri->id)
             ->where('tahun_ajaran_id', $tahun->id)
-            
+
             ->where('semester_id', $semester->id)
             ->get()
             ->keyBy('tahfidz_id');
@@ -353,6 +360,7 @@ class NilaiController extends BaseCrudController
             'nilaiTahfidzs'        => $nilaiTahfidzs,
             'absensi'              => $absensi,
             'pengaturan'           => $pengaturan,
+
         ]);
     }
 
@@ -388,7 +396,9 @@ class NilaiController extends BaseCrudController
 
     public function simpanNilaiDoa(Request $request, int $id)
     {
-        $nilai = Nilai::findOrFail($id);
+        $nilai = Nilai::with('santri')->findOrFail($id);
+
+        $this->authorizeNilai($nilai);
 
         foreach ($request->nilai as $doaId => $nilaiHuruf) {
 
@@ -427,7 +437,9 @@ class NilaiController extends BaseCrudController
 
     public function simpanNilaiKepribadian(Request $request, int $id)
     {
-        $nilai = Nilai::findOrFail($id);
+        $nilai = Nilai::with('santri')->findOrFail($id);
+
+        $this->authorizeNilai($nilai);
 
         foreach ($request->nilai as $kepribadianId => $nilaiHuruf) {
 
@@ -469,7 +481,9 @@ class NilaiController extends BaseCrudController
 
     public function simpanNilaiTilawati(Request $request, int $id)
     {
-        $nilai = Nilai::findOrFail($id);
+        $nilai = Nilai::with('santri')->findOrFail($id);
+
+        $this->authorizeNilai($nilai);
 
         foreach ($request->nilai as $tilawatiId => $nilaiHuruf) {
 
@@ -504,7 +518,9 @@ class NilaiController extends BaseCrudController
 
     public function simpanNilaiTahfidz(Request $request, int $id)
     {
-        $nilai = Nilai::findOrFail($id);
+        $nilai = Nilai::with('santri')->findOrFail($id);
+
+        $this->authorizeNilai($nilai);
 
         foreach ($request->nilai as $tahfidzId => $nilaiHuruf) {
 
@@ -549,7 +565,9 @@ class NilaiController extends BaseCrudController
             'alpha' => 'required|integer|min:0',
         ]);
 
-        $nilai = Nilai::findOrFail($id);
+        $nilai = Nilai::with('santri')->findOrFail($id);
+
+        $this->authorizeNilai($nilai);
 
         Absensi::updateOrCreate(
 
@@ -592,7 +610,9 @@ class NilaiController extends BaseCrudController
 
         ]);
 
-        $nilai = Nilai::findOrFail($id);
+        $nilai = Nilai::with('santri')->findOrFail($id);
+
+        $this->authorizeNilai($nilai);
 
         $nilai->update([
 
@@ -618,12 +638,15 @@ class NilaiController extends BaseCrudController
     |--------------------------------------------------------------------------
     */
 
-        $data = Nilai::with([
 
+
+        $data = Nilai::with([
             'santri.kelas.waliGuru',
             'tahunAjaran',
             'semester',
         ])->findOrFail($id);
+
+        $this->authorizeNilai($data);
         // dd($data->santri->kelas);
 
         $pengaturan = Pengaturan::first();
@@ -713,6 +736,32 @@ class NilaiController extends BaseCrudController
             $item->huruf = $this->terbilang($nilai);
         });
 
+        $nilaiCatatan = round(
+            $guruMengajars->avg(function ($item) {
+                return $item->nilaiDetail->nilai_angka ?? 0;
+            })
+        );
+
+        $masterCatatan = [
+            [
+                'nilai_min' => 80,
+                'nilai_max' => 100,
+                'catatan' => 'Semoga Allah Memberkahimu, Pertahankan Dan Tingkatkan Prestasimu Dalam Kejuaraan'
+            ],
+            [
+                'nilai_min' => 65,
+                'nilai_max' => 79,
+                'catatan' => 'Tingkatkan Dan Perjuangkan Nilai Yang Terbaik Di Ujian Selanjutnya'
+            ],
+            [
+                'nilai_min' => 0,
+                'nilai_max' => 64,
+                'catatan' => 'Berusahalah Yang Giat, Jangan Bermalas-Malasan Agar Mendapatkan Hasil Yang Diharapkan'
+            ]
+        ];
+
+
+
         /*
     |--------------------------------------------------------------------------
     | TEST HTML (sementara)
@@ -734,8 +783,42 @@ class NilaiController extends BaseCrudController
             'tahfidzs',
             'nilaiTahfidzs',
             'absensi',
-            'pengaturan'
+            'pengaturan',
+            'masterCatatan',
+            'nilaiCatatan'
+
         ));
+    }
+
+    /**
+     * Otorisasi akses santri.
+     */
+    private function authorizeSantri(Santri $santri): void
+    {
+        // Admin & Kepala Madrasah
+        if (AccessHelper::isSuperUser()) {
+            return;
+        }
+
+        // Ustadz hanya boleh membuka santri di kelasnya
+        if (AccessHelper::isUstadz()) {
+
+            if ($santri->kelas_id != AccessHelper::kelasId()) {
+                abort(403, 'Anda tidak memiliki hak mengakses data ini.');
+            }
+
+            return;
+        }
+
+        abort(403);
+    }
+
+    /**
+     * Otorisasi berdasarkan data Nilai.
+     */
+    private function authorizeNilai(Nilai $nilai): void
+    {
+        $this->authorizeSantri($nilai->santri);
     }
 
     private function terbilang(int $nilai): string

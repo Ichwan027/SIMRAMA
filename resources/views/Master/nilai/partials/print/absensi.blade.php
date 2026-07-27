@@ -1,37 +1,37 @@
-<div class="section-title">
-    E. ABSENSI
-</div>
+<table class="table-side">
 
-<table class="nilai-table">
+    <tr>
+        <th colspan="2">
+            KETIDAKHADIRAN
+        </th>
+    </tr>
 
     <tr>
 
-        <th>Sakit</th>
+        <td>Sakit</td>
 
-        <th>Izin</th>
-
-        <th>Alpha</th>
+        <td class="text-center">
+            {{ $absensi->sakit ?? 0 }}
+        </td>
 
     </tr>
 
     <tr>
 
-        <td class="text-center">
-
-            {{ $absensi->sakit ?? 0 }}
-
-        </td>
+        <td>Izin</td>
 
         <td class="text-center">
-
             {{ $absensi->izin ?? 0 }}
-
         </td>
 
+    </tr>
+
+    <tr>
+
+        <td>Alpha</td>
+
         <td class="text-center">
-
             {{ $absensi->alpha ?? 0 }}
-
         </td>
 
     </tr>

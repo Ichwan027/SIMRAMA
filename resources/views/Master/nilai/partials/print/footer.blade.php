@@ -1,25 +1,97 @@
-<footer class="raport-footer">
+<table class="footer-table">
 
-    <table width="100%">
+    <tr>
+        <td width="33%"></td>
+        <td width="34%"></td>
+        <td width="33%" class="text-center">
+            Jember, {{ \Carbon\Carbon::parse($data->tanggal_raport ?? now())->translatedFormat('d F Y') }}
+            <br>
+            Wali Kelas
+        </td>
+    </tr>
 
-        <tr>
+    <tr>
+        <td class="text-center">
+            Orang Tua/Wali Santri
+        </td>
 
-            <td width="60%">
+        <td></td>
 
-                <b>Nomor Raport</b><br>
+        <td></td>
+    </tr>
 
-                {{ $data->nomor_raport }}
+    <tr>
+        <td class="ttd-space"></td>
 
-            </td>
+        <td></td>
 
-            <td align="right">
+        <td class="ttd-space"></td>
+    </tr>
 
-                Madrasah Diniyah Fatihul Ulum
+    <tr>
+        <td class="text-center">
 
-            </td>
+            (.................................)
 
-        </tr>
+        </td>
 
-    </table>
+        <td></td>
 
-</footer>
+        <td class="text-center">
+
+            (.................................)
+
+        </td>
+    </tr>
+
+    <tr>
+
+        <td class="text-center">
+
+            Pengasuh
+
+        </td>
+
+        <td class="text-center">
+
+            Mengetahui,
+
+        </td>
+
+        <td class="text-center">
+
+            Kepala Madrasah
+
+        </td>
+
+    </tr>
+
+    <tr>
+
+        <td class="ttd-space"></td>
+
+        <td></td>
+
+        <td class="ttd-space"></td>
+
+    </tr>
+
+    <tr>
+
+        <td class="text-center footer-bold">
+
+            KH. ABDUL HAMID AHMAD
+
+        </td>
+
+        <td></td>
+
+        <td class="text-center footer-bold">
+
+            M. FIRMAN MAULANA
+
+        </td>
+
+    </tr>
+
+</table>

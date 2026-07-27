@@ -19,6 +19,15 @@
 
     </div>
 
+    <div class="col-md-4">
+
+        <label>Nomor Induk Santri</label>
+
+        <input type="text" name="nomor_induk" class="form-control"
+            value="{{ old('nomor_induk', $data->nomor_induk ?? '') }}">
+
+    </div>
+
     {{-- Jenis Kelamin --}}
     <div class="col-md-6 mb-3">
 

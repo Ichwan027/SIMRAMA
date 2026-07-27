@@ -1,104 +1,108 @@
-<table class="table-akademik">
+<div class="nilai-section">
 
-    <thead>
+    <!-- =======================
+         TABEL AKADEMIK (KIRI)
+    ======================== -->
+    <div class="nilai-left">
 
-        <tr>
+        <table class="table-akademik">
 
-            <th width="6%">NO.</th>
+            <thead>
 
-            <th width="23%">MATA PELAJARAN</th>
+                <tr>
 
-            <th width="10%">
-                NILAI
-                <br>
-                ANGKA
-            </th>
+                    <th rowspan="2" style="width:8%">NO</th>
 
-            <th width="31%">
-                HURUF
-            </th>
+                    <th rowspan="2" style="width:52%">
+                        MATA PELAJARAN
+                    </th>
 
-            <th width="12%">
-                PREDIKAT
-            </th>
+                    <th colspan="2">
+                        NILAI
+                    </th>
 
-        </tr>
+                </tr>
 
-    </thead>
+                <tr>
 
-    <tbody>
+                    <th style="width:12%">
+                        ANGKA
+                    </th>
 
-        @foreach ($guruMengajars as $item)
-            <tr>
+                    <th style="width:28%">
+                        HURUF
+                    </th>
 
-                <td align="center">
-                    {{ $loop->iteration }}
-                </td>
+                </tr>
 
-                <td>
-                    {{ $item->mapel->nama }}
-                </td>
+            </thead>
 
-                <td align="center">
-                    {{ $item->nilaiDetail->nilai_angka ?? '-' }}
-                </td>
+            <tbody>
 
-                <td align="center">
-                    {{ $item->huruf }}
-                </td>
+                @foreach ($guruMengajars as $item)
+                    <tr>
 
-                <td align="center">
+                        <td class="text-center">
+                            {{ $loop->iteration }}
+                        </td>
 
-                    {{ $item->nilaiDetail?->predikat?->predikat ?? '-' }}
+                        <td class="text-left">
+                            {{ $item->mapel->nama }}
+                        </td>
 
-                </td>
+                        <td class="text-center">
+                            {{ $item->nilaiDetail->nilai_angka ?? '-' }}
+                        </td>
 
-            </tr>
-        @endforeach
+                        <td class="text-center">
+                            {{ $item->huruf }}
+                        </td>
 
-        <tr>
-            @php
-                $jumlah = $guruMengajars->sum(function ($item) {
-                    return $item->nilaiDetail->nilai_angka ?? 0;
-                });
-            @endphp
+                    </tr>
+                @endforeach
 
-        <tr>
-            <td></td>
+                @for ($i = $guruMengajars->count(); $i < 15; $i++)
+                    <tr>
 
-            <td align="center">
-                <b>Jumlah</b>
-            </td>
+                        <td class="text-center">
+                            {{ $i + 1 }}
+                        </td>
 
-            <td align="center">
-                <b>{{ $jumlah }}</b>
-            </td>
+                        <td></td>
 
-            <td align="center">
-                <b>{{ terbilang($jumlah) }}</b>
-            </td>
+                        <td></td>
 
-            <td></td>
-        </tr>
-        </tr>
+                        <td></td>
 
-        <tr>
+                    </tr>
+                @endfor
 
+            </tbody>
 
-        <tr>
-            <td colspan="2" class="text-center">
-                <strong>Peringkat</strong>
-            </td>
+        </table>
 
-            <td style="text-align:center; vertical-align:middle;">
-                <strong>{{ $data->peringkat ?? '-' }}</strong>
-            </td>
+    </div>
 
-            <td colspan="2"></td>
-        </tr>
+    <!-- =======================
+         PANEL KANAN
+    ======================== -->
 
-        </tr>
+    <div class="nilai-right">
 
-    </tbody>
+        @include('Master.nilai.partials.print.panel-kanan')
 
-</table>
+    </div>
+
+</div>
+
+{{-- <div class="mt-2">
+
+    @include('Master.nilai.partials.print.kenaikan')
+
+</div> --}}
+
+<div class="mt-2">
+
+    @include('Master.nilai.partials.print.catatan')
+
+</div>

@@ -10,7 +10,7 @@
                 <tr>
 
                     <th width="250">
-                        Nama Semester
+                        IMDA
                     </th>
 
                     <td>

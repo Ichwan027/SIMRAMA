@@ -58,6 +58,12 @@ class UserRequest extends FormRequest
                 ]),
             ],
 
+            'guru_id' => [
+                Rule::requiredIf(fn() => $this->role === 'ustadz'),
+                'nullable',
+                'exists:gurus,id',
+            ],
+
             'status' => [
                 'required',
                 'boolean',
@@ -87,6 +93,9 @@ class UserRequest extends FormRequest
             'password.min' => 'Password minimal 8 karakter.',
 
             'role.required' => 'Role wajib dipilih.',
+
+            'guru_id.required' => 'Guru wajib dipilih.',
+            'guru_id.exists'   => 'Guru tidak ditemukan.',
 
             'status.required' => 'Status wajib dipilih.',
 

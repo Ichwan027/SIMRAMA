@@ -30,6 +30,12 @@ class SantriRequest extends FormRequest
                 'max:255',
             ],
 
+            'nomor_induk' => [
+                'nullable',
+                'string',
+                'max:30',
+            ],
+
             'jenis_kelamin' => [
                 'required',
                 Rule::in([

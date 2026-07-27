@@ -30,6 +30,8 @@
 
                         <th>Nama</th>
 
+                        <th>NIS</th>
+
                         <th>Jenis Kelamin</th>
 
                         <th>Kelas</th>
@@ -50,6 +52,8 @@
                             <td>{{ $loop->iteration }}</td>
 
                             <td>{{ $santri->nama }}</td>
+
+                            <td>{{ $santri->nomor_induk }}</td>
 
                             <td>{{ $santri->jenis_kelamin }}</td>
 

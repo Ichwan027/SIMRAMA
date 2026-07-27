@@ -6,6 +6,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Guru;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,8 @@ class User extends Authenticatable
         'password',
         'role',
         'status',
+        'guru_id',
+        'last_login_at',
     ];
 
     /**
@@ -41,6 +44,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
             'status'            => 'boolean',
+            'last_login_at'     => 'datetime',
         ];
     }
 
@@ -63,6 +67,11 @@ class User extends Authenticatable
     public function isUstadz(): bool
     {
         return $this->role === 'ustadz';
+    }
+
+    public function guru()
+    {
+        return $this->belongsTo(Guru::class, 'guru_id');
     }
 
     public function isActive(): bool

@@ -5,6 +5,7 @@ namespace App\Core\Repositories;
 use App\Models\Nilai;
 use App\Models\Santri;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use App\Helpers\AccessHelper;
 
 class NilaiRepository extends BaseRepository
 {
@@ -18,14 +19,32 @@ class NilaiRepository extends BaseRepository
      */
     public function paginate(int $perPage = 10): LengthAwarePaginator
     {
-        return Santri::with('kelas')
-            ->orderBy('nama')
-            ->paginate($perPage);
+        $query = Santri::with('kelas')
+            ->orderBy('nama');
+
+        // Admin & Kepala Madrasah
+        if (AccessHelper::isSuperUser()) {
+            return $query->paginate($perPage);
+        }
+
+        // Wali kelas
+        if (AccessHelper::isUstadz()) {
+
+            $kelasId = AccessHelper::kelasId();
+
+            if ($kelasId) {
+                $query->where('kelas_id', $kelasId);
+            } else {
+                $query->whereRaw('1 = 0');
+            }
+        }
+
+        return $query->paginate($perPage);
     }
 
     public function find(int $id): ?\Illuminate\Database\Eloquent\Model
     {
-        return $this->model
+        $nilai = $this->model
             ->with([
                 'santri.kelas',
                 'tahunAjaran',
@@ -34,6 +53,21 @@ class NilaiRepository extends BaseRepository
                 'details.guruMengajar.mapel',
                 'details.predikat',
             ])
-            ->find($id);
+            ->findOrFail($id);
+
+        if (AccessHelper::isSuperUser()) {
+            return $nilai;
+        }
+
+        if (AccessHelper::isUstadz()) {
+
+            if ($nilai->santri->kelas_id != AccessHelper::kelasId()) {
+                abort(403, 'Anda tidak memiliki hak mengakses data ini.');
+            }
+
+            return $nilai;
+        }
+
+        abort(403);
     }
 }

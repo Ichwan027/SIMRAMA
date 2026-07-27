@@ -14,6 +14,8 @@ class Santri extends Model
 
     protected $fillable = [
 
+        'nomor_induk',    
+
         'nama',
 
         'jenis_kelamin',

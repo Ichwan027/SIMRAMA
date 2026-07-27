@@ -1,33 +1,63 @@
-<table class="header">
+<table class="header-table">
 
     <tr>
 
-        <td colspan="3" align="center">
+        <td class="logo-col">
 
-            <img src="{{ asset('images/madin.png') }}" class="logo-header" alt="Logo 1">
-
-            <img src="{{ asset('images/madin.png') }}" class="logo-header" alt="Logo 2">
+            <img src="{{ asset('images/logo-pondok.png') }}" class="logo-header">
 
         </td>
 
-    </tr>
+        <td class="judul-col">
 
-    <tr>
-        <td colspan="3" class="judul">
-            LAPORAN HASIL BELAJAR SANTRI TPQ / MADIN AL-HIDAYAH
-        </td>
-    </tr>
+            <img src="{{ asset('images/kaligrafi-pondok.jpg') }}" class="arab-header">
 
-    <tr>
-        <td colspan="3" class="alamat">
-            JL. SIMOMULYO BARU BLOK 4-E NO.16-A SURABAYA
-        </td>
-    </tr>
+            <div class="nama-pondok">
 
-    <tr>
-        <td colspan="3" class="alamat">
-            NO. HP / WA 082-260-260-681
+                MADRASAH IBTIDAIYAH
+
+            </div>
+
+            <div class="nama-pesantren">
+
+                PP. AHLUL IRFAN AL-KHOLILIY
+
+            </div>
+
+            <div class="alamat">
+
+                LANGKAP - BANGSALSARI - JEMBER
+
+                <br>
+
+                Email : admin@ahlulirfan.sch.id
+
+                &nbsp;&nbsp;&nbsp;
+
+                Telp : 0812-3456-7890
+
+            </div>
+
         </td>
+
     </tr>
 
 </table>
+
+<hr class="garis">
+
+<div class="judul-raport">
+
+    <div class="judul-utama">
+
+        LAPORAN HASIL BELAJAR
+
+    </div>
+
+    <div class="judul-sub">
+
+        MURID MADRASAH PONDOK PESANTREN AHLUL IRFAN AL-KHOLILIY
+
+    </div>
+
+</div>
