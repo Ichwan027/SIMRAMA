@@ -15,8 +15,6 @@
 
     <div class="page-break"></div>
 
-    @include('Master.nilai.partials.print.halaman2')
-
 </body>
 
 </html>
