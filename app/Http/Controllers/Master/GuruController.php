@@ -7,11 +7,19 @@ use App\Http\Requests\Master\GuruRequest;
 use App\Services\GuruService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Helpers\AccessHelper;
 
 class GuruController extends BaseCrudController
 {
     public function __construct(GuruService $service)
     {
+
+        abort_unless(
+            AccessHelper::isAdminOrKepala(),
+            403,
+            'Anda tidak memiliki hak akses.'
+        );
+
         $this->service = $service;
 
         $this->view = 'Master.Guru';

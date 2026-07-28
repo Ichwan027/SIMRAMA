@@ -1,39 +1,43 @@
-<table class="identitas">
+<div class="identitas">
 
-    <tr>
+    <table>
 
-        <td width="18%">NAMA MURID</td>
+        <tr>
 
-        <td width="32%">: {{ $data->santri->nama }}</td>
+            <td class="label">Nama Santri</td>
+            <td class="titik">:</td>
+            <td class="isi">{{ $data->santri->nama }}</td>
 
-        <td width="18%">NO. INDUK</td>
+            <td class="label-kanan">Nomor Induk</td>
+            <td class="titik">:</td>
+            <td class="isi-kanan">{{ $data->santri->nomor_induk }}</td>
 
-        <td>: {{ $data->santri->nomor_induk }}</td>
+        </tr>
 
-    </tr>
+        <tr>
 
-    <tr>
+            <td class="label">Kelas</td>
+            <td class="titik">:</td>
+            <td class="isi">{{ $data->santri->kelas->nama }}</td>
 
-        <td>KELAS</td>
+            <td class="label-kanan">IMDA</td>
+            <td class="titik">:</td>
+            <td class="isi-kanan">{{ $data->semester->nama ?? '-' }}</td>
 
-        <td>: {{ $data->santri->kelas->nama }}</td>
+        </tr>
 
-        <td>IMDA</td>
+        <tr>
 
-        <td>: {{ $data->semester->nama }}</td>
+            <td class="label">Tahun Pelajaran</td>
+            <td class="titik">:</td>
+            <td class="isi">{{ $data->tahunAjaran->nama }}</td>
 
-    </tr>
+            <td class="label-kanan"></td>
+            <td class="titik"></td>
+            <td class="isi-kanan"></td>
 
-    <tr>
+        </tr>
 
-        <td>TAHUN PELAJARAN</td>
+    </table>
 
-        <td>: {{ $data->tahunAjaran->tahun }}</td>
-
-        <td></td>
-
-        <td></td>
-
-    </tr>
-
-</table>
+</div>

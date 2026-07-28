@@ -37,9 +37,9 @@
 
         <td></td>
 
-        <td class="text-center">
+        <td class="text-center footer-bold">
 
-            (.................................)
+            {{ $data->santri->kelas->waliGuru->nama ?? '(Belum Ada Wali Kelas)' }}
 
         </td>
     </tr>

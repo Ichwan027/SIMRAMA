@@ -46,4 +46,15 @@ class Nilai extends Model
     {
         return $this->hasMany(NilaiDetail::class);
     }
+
+    public function nilaiKepribadians()
+    {
+        return $this->hasMany(
+            NilaiKepribadian::class,
+            'santri_id',
+            'santri_id'
+        )
+            ->where('tahun_ajaran_id', $this->tahun_ajaran_id)
+            ->where('semester_id', $this->semester_id);
+    }
 }

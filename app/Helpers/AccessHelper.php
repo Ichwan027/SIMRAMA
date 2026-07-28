@@ -29,6 +29,14 @@ class AccessHelper
     }
 
     /**
+     * Admin atau Kepala Madrasah
+     */
+    public static function isAdminOrKepala(): bool
+    {
+        return self::isSuperUser();
+    }
+
+    /**
      * Ustadz
      */
     public static function isUstadz(): bool

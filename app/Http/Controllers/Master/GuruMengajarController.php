@@ -12,11 +12,19 @@ use App\Models\TahunAjaran;
 use App\Services\GuruMengajarService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Helpers\AccessHelper;
 
 class GuruMengajarController extends BaseCrudController
 {
     public function __construct(GuruMengajarService $service)
     {
+
+        abort_unless(
+            AccessHelper::isAdminOrKepala(),
+            403,
+            'Anda tidak memiliki hak akses.'
+        );
+
         $this->service = $service;
 
         $this->view = 'Master.guru-mengajar';

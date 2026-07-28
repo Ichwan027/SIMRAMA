@@ -36,7 +36,7 @@
 
                 <td width="25%" class="text-center">
 
-                    {{ $nilaiKepribadians[$item->id]->predikat ?? '-' }}
+                    {{ $nilaiKepribadians[$item->id]->nilai ?? '-' }}
 
                 </td>
 

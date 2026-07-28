@@ -1,3 +1,7 @@
+@php
+    use App\Helpers\AccessHelper;
+@endphp
+
 <div id="sidebar" class="active">
 
     <div class="sidebar-wrapper active">
@@ -60,9 +64,14 @@
 
                     <ul class="submenu">
 
-                        <li class="submenu-item">
-                            <a href="{{ route('guru.index') }}">Guru</a>
-                        </li>
+                        @if (AccessHelper::isAdminOrKepala())
+                            <li class="sidebar-item {{ request()->routeIs('guru.*') ? 'active' : '' }}">
+                                <a href="{{ route('guru.index') }}" class="sidebar-link">
+                                    <i class="bi bi-person-badge"></i>
+                                    <span>Guru</span>
+                                </a>
+                            </li>
+                        @endif
 
                         <li class="submenu-item">
                             <a href="{{ route('santri.index') }}">Santri</a>
@@ -110,17 +119,14 @@
 
                 </li>
 
-                <li class="sidebar-item">
-
-                    <a href="{{ route('guru-mengajar.index') }}" class="sidebar-link">
-
-                        <i class="bi bi-person-workspace"></i>
-
-                        <span>Guru Mengajar</span>
-
-                    </a>
-
-                </li>
+                @if (AccessHelper::isAdminOrKepala())
+                    <li class="sidebar-item {{ request()->routeIs('guru-mengajar.*') ? 'active' : '' }}">
+                        <a href="{{ route('guru-mengajar.index') }}" class="sidebar-link">
+                            <i class="bi bi-person-workspace"></i>
+                            <span>Guru Mengajar</span>
+                        </a>
+                    </li>
+                @endif
 
                 <li class="sidebar-item">
 
