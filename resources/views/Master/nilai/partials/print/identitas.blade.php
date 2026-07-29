@@ -30,7 +30,7 @@
 
             <td class="label">Tahun Pelajaran</td>
             <td class="titik">:</td>
-            <td class="isi">{{ $data->tahunAjaran->nama }}</td>
+            <td class="isi">{{ $data->tahunAjaran->tahun }}</td>
 
             <td class="label-kanan"></td>
             <td class="titik"></td>

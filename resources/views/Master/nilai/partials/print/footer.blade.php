@@ -1,37 +1,51 @@
 <table class="footer-table">
 
+    {{-- Tanggal --}}
     <tr>
-        <td width="33%"></td>
-        <td width="34%"></td>
-        <td width="33%" class="text-center">
-            Jember, {{ \Carbon\Carbon::parse($data->tanggal_raport ?? now())->translatedFormat('d F Y') }}
-            <br>
+
+        <td></td>
+
+        <td></td>
+
+        <td class="text-center">
+            Jember,
+            {{ \Carbon\Carbon::parse($data->tanggal_raport ?? now())->translatedFormat('d F Y') }}
+        </td>
+
+    </tr>
+
+    {{-- Jabatan Atas --}}
+    <tr>
+
+        <td class="text-center jabatan">
+            Orang Tua / Wali Santri
+        </td>
+
+        <td></td>
+
+        <td class="text-center jabatan">
             Wali Kelas
         </td>
+
     </tr>
 
+    {{-- Ruang TTD --}}
     <tr>
-        <td class="text-center">
-            Orang Tua/Wali Santri
-        </td>
 
-        <td></td>
-
-        <td></td>
-    </tr>
-
-    <tr>
         <td class="ttd-space"></td>
 
         <td></td>
 
         <td class="ttd-space"></td>
+
     </tr>
 
+    {{-- Nama --}}
     <tr>
+
         <td class="text-center">
 
-            (.................................)
+            (................................)
 
         </td>
 
@@ -42,23 +56,32 @@
             {{ $data->santri->kelas->waliGuru->nama ?? '(Belum Ada Wali Kelas)' }}
 
         </td>
+
     </tr>
 
+    {{-- Jarak --}}
     <tr>
 
-        <td class="text-center">
+        <td colspan="3" style="height:18px;"></td>
+
+    </tr>
+
+    {{-- Jabatan Bawah --}}
+    <tr>
+
+        <td class="text-center jabatan">
 
             Pengasuh
 
         </td>
 
-        <td class="text-center">
+        <td class="text-center jabatan">
 
             Mengetahui,
 
         </td>
 
-        <td class="text-center">
+        <td class="text-center jabatan">
 
             Kepala Madrasah
 
@@ -66,6 +89,7 @@
 
     </tr>
 
+    {{-- Ruang TTD --}}
     <tr>
 
         <td class="ttd-space"></td>
@@ -76,6 +100,7 @@
 
     </tr>
 
+    {{-- Nama --}}
     <tr>
 
         <td class="text-center footer-bold">
