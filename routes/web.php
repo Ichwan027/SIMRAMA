@@ -148,10 +148,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['auth'])->group(function () {
 
-        Route::middleware('role:admin,kepala')->group(function () {
-
+        Route::middleware(['role:admin'])->group(function () {
             Route::resource('guru', GuruController::class);
-
             Route::resource('guru-mengajar', GuruMengajarController::class);
         });
     });

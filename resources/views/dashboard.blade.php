@@ -8,7 +8,6 @@
 
     $role = match ($user->role) {
         'admin' => 'Administrator Sistem',
-        'kepala' => 'Kepala Madrasah',
         'ustadz' => 'Guru / Wali Kelas',
         default => 'Pengguna',
     };
@@ -16,8 +15,6 @@
     $deskripsi = match ($user->role) {
         'admin'
             => 'Kelola seluruh data master, pengguna, akademik, raport serta aktivitas Sistem Informasi Raport Madrasah (SIMRAMA).',
-
-        'kepala' => 'Pantau perkembangan akademik, nilai, absensi dan raport seluruh santri melalui dashboard ini.',
 
         'ustadz' => 'Input nilai, absensi dan raport santri pada kelas yang menjadi tanggung jawab Anda.',
 

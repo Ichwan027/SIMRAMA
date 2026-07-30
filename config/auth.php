@@ -44,6 +44,11 @@ return [
         ],
     ],
 
+     'kepala' => [
+        'driver' => 'session',
+        'provider' => 'kepalas', // sesuaikan dengan provider Anda
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | User Providers
