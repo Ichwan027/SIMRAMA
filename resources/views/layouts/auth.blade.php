@@ -11,6 +11,9 @@
 
     <title>Login SIMRAMA</title>
 
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-pondok.png') }}?v={{ time() }}">
+    <link rel="shortcut icon" href="{{ asset('images/logo-pondok.png') }}?v={{ time() }}">
+
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
         rel="stylesheet">

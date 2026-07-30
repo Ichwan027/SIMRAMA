@@ -28,6 +28,19 @@ use App\Http\Controllers\Master\PengaturanController;
 
 /*
 |--------------------------------------------------------------------------
+| Redirect root to login
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Dashboard
 |--------------------------------------------------------------------------
 */
@@ -61,7 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['auth', 'admin'])->group(function () {
         Route::resource('user', UserController::class);
     });
-    Route::resource('guru', GuruController::class);
+    Route::resource('guru', GuruController::class)->middleware('role:admin,kepala');
     Route::resource('santri', SantriController::class);
     Route::resource('kelas', KelasController::class);
     Route::resource('mapel', MapelController::class);
@@ -72,22 +85,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('kepribadian', KepribadianController::class);
     Route::resource('absensi', AbsensiController::class);
     Route::resource('tilawati', TilawatiController::class);
-    Route::middleware(['auth'])->group(function () {
-
-        Route::resource('guru', GuruController::class);
-
-        Route::resource('kelas', KelasController::class);
-
-        Route::resource('mapel', MapelController::class);
-
-        Route::resource('doa-harian', DoaHarianController::class);
-
-        Route::resource('kepribadian', KepribadianController::class);
-
-        Route::resource('tahfidz', TahfidzController::class);
-
-        Route::resource('tilawati', TilawatiController::class);
-    });
 
     Route::get(
         'nilai/santri/{santri}',
@@ -146,15 +143,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::middleware(['auth'])->group(function () {
-
-        Route::middleware(['role:admin'])->group(function () {
-            Route::resource('guru', GuruController::class);
-            Route::resource('guru-mengajar', GuruMengajarController::class);
-        });
-    });
-
-    Route::resource('guru-mengajar', GuruMengajarController::class);
+    Route::resource('guru-mengajar', GuruMengajarController::class)->middleware('role:admin,kepala');
 
     /*
     |--------------------------------------------------------------------------
@@ -162,7 +151,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::resource('nilai', NilaiController::class);
     Route::resource('nilai-doa', NilaiDoaController::class);
     Route::resource('nilai-kepribadian', NilaiKepribadianController::class);
     Route::resource('nilai-tahfidz', NilaiTahfidzController::class);
@@ -172,8 +160,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     | Absensi
     |--------------------------------------------------------------------------
     */
-
-    Route::resource('absensi', AbsensiController::class);
     Route::post(
         '/nilai/{id}/absensi',
         [NilaiController::class, 'simpanAbsensi']

@@ -10,7 +10,7 @@
 
             <div class="d-flex align-items-center">
 
-                <img src="{{ asset('images/logo-pondok.png') }}" width="80" class="me-3">
+                <img src="{{ asset('images/logo-pondok.png') }}" style="width: auto; height: 100px;" class="me-3">
 
                 <div>
 

@@ -27,9 +27,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->restrictOnDelete();
 
-            Schema::table('nilais', function (Blueprint $table) {
-                $table->string('peringkat')->nullable()->after('semester_id');
-            });
+            $table->string('peringkat')->nullable()->after('semester_id');
 
             $table->string('nomor_raport', 50)->unique();
 
