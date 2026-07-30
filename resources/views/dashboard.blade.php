@@ -576,119 +576,42 @@
 
                 <div class="col-lg-8">
 
-                    <div class="card border-0 shadow-sm">
+                    <div class="card border-0 shadow-lg h-100">
+                        <div class="card-body p-4">
 
-                        <div class="card-header bg-white border-0 pt-4">
-
-                            <div class="d-flex justify-content-between align-items-center">
-
+                            <div class="d-flex justify-content-between align-items-start">
                                 <div>
-
-                                    <h5 class="fw-bold mb-1">
-
-                                        Progress Pengisian Raport
-
-                                    </h5>
-
-                                    <small class="text-muted">
-
-                                        Persentase raport yang telah selesai diinput.
-
-                                    </small>
-
+                                    <h5 class="fw-bold mb-1">Progress Pengisian Raport</h5>
+                                    <p class="text-muted small mb-0">Persentase raport yang telah selesai diinput.</p>
                                 </div>
-
-                                <div>
-
-                                    <span class="badge bg-success px-3 py-2">
-
-                                        {{ $raportSelesai ?? 0 }} / {{ $totalSantri ?? $santri }}
-
-                                    </span>
-
-                                </div>
-
+                                <span class="badge bg-success px-3 py-2">
+                                    {{ $raportSelesai }} / {{ $totalSantriWali }}
+                                </span>
                             </div>
 
-                        </div>
-
-                        <div class="card-body">
-
-                            @php
-
-                                $total = max($totalSantri ?? $santri, 1);
-
-                                $selesai = $raportSelesai ?? 0;
-
-                                $persen = round(($selesai / $total) * 100);
-
-                            @endphp
-
-                            <div class="progress progress-lg">
-
-                                <div id="progressRaport" class="progress-bar bg-success" role="progressbar"
-                                    style="width:{{ $persen }}%">
-
-                                    {{ $persen }}%
-
+                            <div class="progress mt-3" style="height: 10px;">
+                                <div class="progress-bar bg-success" role="progressbar"
+                                    style="width: {{ $persenSelesai }}%;" aria-valuenow="{{ $persenSelesai }}"
+                                    aria-valuemin="0" aria-valuemax="100">
                                 </div>
-
                             </div>
 
                             <div class="row text-center mt-4">
-
-                                <div class="col-md-4">
-
-                                    <h3 class="fw-bold text-success">
-
-                                        {{ $selesai }}
-
-                                    </h3>
-
-                                    <small class="text-muted">
-
-                                        Raport Selesai
-
-                                    </small>
-
+                                <div class="col-4">
+                                    <h4 class="fw-bold text-success mb-0">{{ $raportSelesai }}</h4>
+                                    <small class="text-muted">Raport Selesai</small>
                                 </div>
-
-                                <div class="col-md-4">
-
-                                    <h3 class="fw-bold text-warning">
-
-                                        {{ $total - $selesai }}
-
-                                    </h3>
-
-                                    <small class="text-muted">
-
-                                        Belum Selesai
-
-                                    </small>
-
+                                <div class="col-4">
+                                    <h4 class="fw-bold text-warning mb-0">{{ $raportBelum }}</h4>
+                                    <small class="text-muted">Belum Selesai</small>
                                 </div>
-
-                                <div class="col-md-4">
-
-                                    <h3 class="fw-bold text-primary">
-
-                                        {{ $total }}
-
-                                    </h3>
-
-                                    <small class="text-muted">
-
-                                        Total Santri
-
-                                    </small>
-
+                                <div class="col-4">
+                                    <h4 class="fw-bold text-primary mb-0">{{ $totalSantriWali }}</h4>
+                                    <small class="text-muted">Total Santri</small>
                                 </div>
-
                             </div>
 
                         </div>
-
                     </div>
 
                 </div>

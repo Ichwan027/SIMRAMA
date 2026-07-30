@@ -47,7 +47,7 @@
 
                                 <th width="60">No</th>
 
-                                <th>Nama Mata Pelajaran</th>
+                                <th>Mata Pelajaran</th>
 
                                 <th width="100">Urutan</th>
 
