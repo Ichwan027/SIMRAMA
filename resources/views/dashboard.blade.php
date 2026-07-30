@@ -173,6 +173,10 @@
 
                                         {{ strtoupper($user->role) }}
 
+                                        @if ($user->isUstadz() && isset($kelasWali) && $kelasWali)
+                                            - {{ $kelasWali->nama }}
+                                        @endif
+
                                     </span>
 
                                 </div>

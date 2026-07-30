@@ -65,7 +65,7 @@
                     <ul class="submenu">
 
                         @if (AccessHelper::isAdminOrKepala())
-                            <li class="sidebar-item {{ request()->routeIs('guru.*') ? 'active' : '' }}">
+                            <li class="submenu-item {{ request()->routeIs('guru.*') ? : '' }}">
                                 <a href="{{ route('guru.index') }}" class="sidebar-link">
                                     <i class="bi bi-person-badge"></i>
                                     <span>Guru</span>
@@ -74,41 +74,46 @@
                         @endif
 
                         <li class="submenu-item">
-                            <a href="{{ route('santri.index') }}">Santri</a>
+                            <a href="{{ route('santri.index') }}">
+                                <i class="bi bi-people"></i>
+                                <span>Santri</span>
+                            </a>
                         </li>
 
                         <li class="submenu-item">
-                            <a href="{{ route('kelas.index') }}">Kelas</a>
+                            <a href="{{ route('kelas.index') }}">
+                                <i class="bi bi-door-open"></i>
+                                <span>Kelas</span>
+                            </a>
                         </li>
 
                         <li class="submenu-item">
-                            <a href="{{ route('mapel.index') }}">Mata Pelajaran</a>
+                            <a href="{{ route('mapel.index') }}">
+                                <i class="bi bi-book"></i>
+                                <span>Mata Pelajaran</span>
+                            </a>
                         </li>
 
                         <li class="submenu-item">
-                            <a href="{{ route('semester.index') }}">iMDA</a>
+                            <a href="{{ route('semester.index') }}">
+                                <i class="bi bi-calendar3"></i>
+                                <span>Imda</span>
+                            </a>
                         </li>
 
                         <li class="submenu-item">
-                            <a href="{{ route('tahun-ajaran.index') }}">Tahun Ajaran</a>
+                            <a href="{{ route('tahun-ajaran.index') }}">
+                                <i class="bi bi-calendar-range"></i>
+                                <span>Tahun Ajaran</span>
+                            </a>
                         </li>
-
-                        {{-- <li class="submenu-item">
-                            <a href="{{ route('predikat.index') }}">Predikat</a>
-                        </li> --}}
-
-                        {{-- <li class="submenu-item">
-                            <a href="{{ route('doa-harian.index') }}">Doa Harian</a>
-                        </li> --}}
 
                         <li class="submenu-item">
-                            <a href="{{ route('kepribadian.index') }}">Kepribadian</a>
+                            <a href="{{ route('kepribadian.index') }}">
+                                <i class="bi bi-person-heart"></i>
+                                <span>Kepribadian</span>
+                            </a>
                         </li>
-
-                        {{-- <li class="submenu-item">
-                            <a href="{{ route('tahfidz.index') }}">Tahfidz</a>
-                        </li> --}}
-
                     </ul>
 
                 </li>
