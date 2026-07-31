@@ -6,7 +6,7 @@
 
             <label class="form-label">
 
-                Nama Do'a
+                Kepribadian
 
             </label>
 

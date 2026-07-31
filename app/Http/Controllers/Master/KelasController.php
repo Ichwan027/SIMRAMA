@@ -45,13 +45,9 @@ class KelasController extends BaseCrudController
 
     public function store(KelasRequest $request): RedirectResponse
     {
-    //      dd(
-    //     $request->all(),
-    //     $request->validated()
-    // );
-    //     $this->service->create(
-    //         $request->validated()
-    //     );
+        $this->service->create(
+            $request->validated()
+        );
 
         return redirect()
             ->route($this->route . '.index')
