@@ -26,15 +26,15 @@
 
             <div class="alamat">
 
-                LANGKAP - BANGSALSARI - JEMBER
+                Jl. Mawar Gg Al-Kholily No. 4, Krajan, Langkap, Bangsalsari, Jember, Jawa Timur, 68154
 
                 <br>
 
-                Email : admin@ahlulirfan.sch.id
+                Email : alf4anofficial079@gmail.com
 
                 &nbsp;&nbsp;&nbsp;
 
-                Telp : 0812-3456-7890
+                Telp : 082322916630
 
             </div>
 
