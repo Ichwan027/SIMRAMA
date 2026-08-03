@@ -59,7 +59,7 @@
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    @include('components.alert')
+    {{-- Komponen alert dihapus untuk menghindari notifikasi ganda (gunakan partials.flash saja) --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

@@ -27,15 +27,7 @@
 
     <div class="card-body">
 
-        @if(session('success'))
-
-            <div class="alert alert-success">
-
-                {{ session('success') }}
-
-            </div>
-
-        @endif
+        {{-- Notifikasi flash sudah ditangani di layout melalui partials.flash untuk menghindari duplikasi --}}
 
         <div class="table-responsive">
 
