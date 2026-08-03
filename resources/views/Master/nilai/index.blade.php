@@ -9,7 +9,7 @@
 
         <div class="d-flex justify-content-between mb-3">
 
-            
+
 
             <form action="{{ route('nilai.generate') }}" method="POST">
                 @csrf
@@ -36,6 +36,7 @@
                             <th width="60">No</th>
                             <th>Nama Santri</th>
                             <th>Kelas</th>
+                            <th>Status Raport</th>
                             <th width="170">Aksi</th>
                         </tr>
 
@@ -51,6 +52,25 @@
                                 <td>{{ $item->nama }}</td>
 
                                 <td>{{ $item->kelas?->nama }}</td>
+
+                                <td>
+                                    @if ($item->status_raport == 'lengkap')
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                            Lengkap
+                                        </span>
+                                    @elseif($item->status_raport == 'sebagian')
+                                        <span class="badge bg-warning text-dark">
+                                            <i class="bi bi-hourglass-split"></i>
+                                            Sebagian
+                                        </span>
+                                    @else
+                                        <span class="badge bg-danger">
+                                            <i class="bi bi-x-circle-fill"></i>
+                                            Belum
+                                        </span>
+                                    @endif
+                                </td>
 
                                 <td>
 

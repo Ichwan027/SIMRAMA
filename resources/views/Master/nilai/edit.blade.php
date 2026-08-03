@@ -19,7 +19,7 @@
 
             @include('Master.nilai.partials.absensi')
 
-            @include('Master.nilai.partials.catatan')
+            {{-- @include('Master.nilai.partials.catatan') --}}
 
         </div>
 
