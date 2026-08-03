@@ -31,32 +31,31 @@
 
     <div class="page-heading">
 
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-start">
 
+            {{-- Judul Halaman --}}
             <div>
-
-                <h2 class="fw-bold mb-0">
-
+                <h2 class="fw-bold mb-1">
                     Dashboard
-
                 </h2>
 
                 <small class="text-muted">
-
                     Sistem Informasi Raport Madrasah
-
                 </small>
-
             </div>
 
-            <div>
-
-                <span class="badge bg-primary fs-6">
-
-                    {{ $role }}
-
+            {{-- Informasi User --}}
+            <div class="d-flex align-items-center gap-3 ms-auto">
+                <span class="text-muted small d-none d-md-inline">
+                    {{ auth()->user()->name }}
                 </span>
-
+                <span class="badge bg-primary rounded-pill d-none d-md-inline">
+                    {{ ucfirst(str_replace('_', ' ', auth()->user()->role)) }}
+                </span>
+                <a href="{{ route('profile.edit') }}" class="btn btn-outline-secondary btn-sm rounded-circle p-1"
+                    title="Profile">
+                    <i class="bi bi-person-circle fs-5"></i>
+                </a>
             </div>
 
         </div>

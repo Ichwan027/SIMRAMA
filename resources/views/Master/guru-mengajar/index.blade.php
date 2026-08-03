@@ -73,7 +73,7 @@
 
                         <td>
 
-                            {{ $item->guru->nama }}
+                            {{ $item->guru?->nama ?? '-' }}
 
                         </td>
 

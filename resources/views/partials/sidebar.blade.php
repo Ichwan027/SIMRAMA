@@ -6,19 +6,19 @@
 
     <div class="sidebar-wrapper active">
 
-        <div class="sidebar-header">
+        <div class="sidebar-header py-4">
 
-            <div class="d-flex align-items-center">
+            <div class="d-flex flex-column align-items-center">
 
-                <img src="{{ asset('images/logo-pondok.png') }}" style="width: auto; height: 100px;" class="me-3">
+                <img src="{{ asset('images/logo-pondok.png') }}" style="height:90px; width:auto;">
 
-                <div>
+                <h3 class="mt-3 mb-0 fw-bold">
+                    SIMRAMA
+                </h3>
 
-                    <h3 class="mb-0 fw-bold text-primary">
-                        SIMRAMA
-                    </h3>
-
-                </div>
+                {{-- <small class="text-muted">
+                    Sistem Informasi Raport Madrasah
+                </small> --}}
 
             </div>
 
@@ -65,7 +65,7 @@
                     <ul class="submenu">
 
                         @if (AccessHelper::isAdminOrKepala())
-                            <li class="submenu-item {{ request()->routeIs('guru.*') ? : '' }}">
+                            <li class="submenu-item {{ request()->routeIs('guru.*') ?: '' }}">
                                 <a href="{{ route('guru.index') }}" class="sidebar-link">
                                     <i class="bi bi-person-badge"></i>
                                     <span>Guru</span>
