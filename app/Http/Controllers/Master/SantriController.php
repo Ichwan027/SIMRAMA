@@ -8,6 +8,11 @@ use App\Models\Kelas;
 use App\Services\SantriService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Exports\SantriTemplateExport;
+use App\Imports\SantriImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
+
 
 class SantriController extends BaseCrudController
 {
@@ -20,6 +25,29 @@ class SantriController extends BaseCrudController
         $this->route = 'santri';
 
         $this->title = 'Santri';
+    }
+
+    public function downloadTemplate()
+    {
+        return Excel::download(
+            new SantriTemplateExport(),
+            'Template_Santri.xlsx'
+        );
+    }
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        Excel::import(
+            new SantriImport(),
+            $request->file('file')
+        );
+
+        return redirect()
+            ->route('santri.index')
+            ->with('success', 'Import data santri berhasil.');
     }
 
     /**

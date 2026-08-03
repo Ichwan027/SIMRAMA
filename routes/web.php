@@ -65,6 +65,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 
+    // =========================
+    // IMPORT SANTRI
+    // =========================
+
+    Route::get(
+        'santri/template',
+        [SantriController::class, 'downloadTemplate']
+    )->name('santri.template');
+
+    Route::post(
+        'santri/import',
+        [SantriController::class, 'import']
+    )->name('santri.import');
     /*
     |--------------------------------------------------------------------------
     | Master Data
@@ -190,3 +203,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+//import Guru
+Route::get(
+    'guru-template',
+    [GuruController::class, 'downloadTemplate']
+)->name('guru.template');
+
+Route::post(
+    'guru-import',
+    [GuruController::class, 'import']
+)->name('guru.import');

@@ -8,6 +8,10 @@ use App\Services\GuruService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Helpers\AccessHelper;
+use App\Exports\GuruTemplateExport;
+use App\Imports\GuruImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
 
 class GuruController extends BaseCrudController
 {
@@ -27,6 +31,43 @@ class GuruController extends BaseCrudController
         $this->route = 'guru';
 
         $this->title = 'Guru';
+    }
+
+    /**
+     * Download template import Guru.
+     */
+    public function downloadTemplate()
+    {
+        return Excel::download(
+            new GuruTemplateExport(),
+            'Template_Guru.xlsx'
+        );
+    }
+
+    /**
+     * Import data Guru dari Excel.
+     */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => [
+                'required',
+                'file',
+                'mimes:xlsx,xls'
+            ],
+        ]);
+
+        Excel::import(
+            new GuruImport(),
+            $request->file('file')
+        );
+
+        return redirect()
+            ->route('guru.index')
+            ->with(
+                'success',
+                'Data guru berhasil diimport.'
+            );
     }
 
     /**

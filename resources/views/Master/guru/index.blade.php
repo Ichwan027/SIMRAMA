@@ -4,168 +4,233 @@
 
 @section('content')
 
-<x-page-header
-    title="Data Guru"
-    subtitle="Kelola seluruh data guru madrasah">
+    <x-page-header title="Data Guru" subtitle="Kelola seluruh data guru madrasah">
 
-    <a href="{{ route('guru.create') }}" class="btn btn-primary">
+        <div class="d-flex justify-content-end gap-2 mb-3">
 
-        <i class="bi bi-plus-circle"></i>
+            <a href="{{ route('guru.template') }}" class="btn btn-success">
+                <i class="bi bi-download"></i>
+                Download Template
+            </a>
 
-        Tambah Guru
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importGuru">
 
-    </a>
+                <i class="bi bi-file-earmark-excel"></i>
 
-</x-page-header>
+                Import Excel
 
-<x-form-card>
+            </button>
 
-    <div class="table-responsive">
+            <a href="{{ route('guru.create') }}" class="btn btn-primary">
 
-        <table class="table table-striped">
+                <i class="bi bi-plus-circle"></i>
 
-            <thead>
+                Tambah Guru
 
-                <tr>
+            </a>
 
-                    <th width="60">No</th>
+        </div>
+    </x-page-header>
 
-                    <th>Nama</th>
+    <x-form-card>
 
-                    <th>Jabatan</th>
+        <div class="table-responsive">
 
-                    <th>Telepon</th>
+            <table class="table table-striped">
 
-                    <th>Status</th>
+                <thead>
 
-                    <th width="180">Aksi</th>
+                    <tr>
 
-                </tr>
+                        <th width="60">No</th>
 
-            </thead>
+                        <th>Nama</th>
 
-            <tbody>
+                        <th>Jabatan</th>
 
-                @forelse($data as $guru)
+                        <th>Telepon</th>
 
-                <tr>
+                        <th>Status</th>
 
-                    <td>{{ $loop->iteration }}</td>
+                        <th width="180">Aksi</th>
 
-                    <td>{{ $guru->nama }}</td>
+                    </tr>
 
-                    <td>{{ $guru->jabatan }}</td>
+                </thead>
 
-                    <td>{{ $guru->telepon }}</td>
+                <tbody>
 
-                    <td>
+                    @forelse($data as $guru)
+                        <tr>
 
-                        @if($guru->status)
+                            <td>
+                                {{ ($data->currentPage() - 1) * $data->perPage() + $loop->iteration }}
+                            </td>
 
-                        <span class="badge bg-success">
-                            Aktif
-                        </span>
+                            <td>{{ $guru->nama }}</td>
 
-                        @else
+                            <td>{{ $guru->jabatan }}</td>
 
-                        <span class="badge bg-danger">
-                            Nonaktif
-                        </span>
+                            <td>{{ $guru->telepon }}</td>
 
-                        @endif
+                            <td>
 
-                    </td>
+                                @if ($guru->status)
+                                    <span class="badge bg-success">
+                                        Aktif
+                                    </span>
+                                @else
+                                    <span class="badge bg-danger">
+                                        Nonaktif
+                                    </span>
+                                @endif
 
-                    <td>
+                            </td>
 
-                        <a href="{{ route('guru.show',$guru->id) }}"
-                            class="btn btn-info btn-sm">
+                            <td>
 
-                            <i class="bi bi-eye"></i>
+                                <a href="{{ route('guru.show', $guru->id) }}" class="btn btn-info btn-sm">
 
-                        </a>
+                                    <i class="bi bi-eye"></i>
 
-                        <a href="{{ route('guru.edit',$guru->id) }}"
-                            class="btn btn-warning btn-sm">
+                                </a>
 
-                            <i class="bi bi-pencil"></i>
+                                <a href="{{ route('guru.edit', $guru->id) }}" class="btn btn-warning btn-sm">
 
-                        </a>
+                                    <i class="bi bi-pencil"></i>
 
-                        <form
-                            action="{{ route('guru.destroy',$guru->id) }}"
-                            method="POST"
-                            class="form-delete">
+                                </a>
 
-                            @csrf
-                            @method('DELETE')
+                                <form action="{{ route('guru.destroy', $guru->id) }}" method="POST" class="form-delete">
 
-                            <button
-                                class="btn btn-danger btn-sm">
+                                    @csrf
+                                    @method('DELETE')
 
-                                <i class="bi bi-trash"></i>
+                                    <button class="btn btn-danger btn-sm">
 
-                            </button>
+                                        <i class="bi bi-trash"></i>
 
-                        </form>
+                                    </button>
 
-                    </td>
+                                </form>
 
-                </tr>
+                            </td>
 
-                @empty
+                        </tr>
 
-                <tr>
+                    @empty
 
-                    <td colspan="6" class="text-center">
+                        <tr>
 
-                        Belum ada data guru.
+                            <td colspan="6" class="text-center">
 
-                    </td>
+                                Belum ada data guru.
 
-                </tr>
+                            </td>
 
-                @endforelse
+                        </tr>
+                    @endforelse
 
-            </tbody>
+                </tbody>
 
-        </table>
+            </table>
+
+        </div>
+
+    </x-form-card>
+
+    <div class="mt-3 d-flex justify-content-end">
+
+        {{ $data->links() }}
 
     </div>
 
-</x-form-card>
+    <div class="modal fade" id="importGuru" tabindex="-1">
+
+        <div class="modal-dialog">
+
+            <form action="{{ route('guru.import') }}" method="POST" enctype="multipart/form-data">
+
+                @csrf
+
+                <div class="modal-content">
+
+                    <div class="modal-header">
+
+                        <h5 class="modal-title">
+
+                            Import Data Guru
+
+                        </h5>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        </button>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                        <input type="file" name="file" class="form-control" accept=".xlsx,.xls" required>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+
+                            Batal
+
+                        </button>
+
+
+
+                        <button class="btn btn-success">
+
+                            <i class="bi bi-upload"></i>
+
+                            Import
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 
 @endsection
 
 @push('scripts')
+    <script>
+        document.querySelectorAll('.form-delete').forEach(form => {
 
-<script>
-    document.querySelectorAll('.form-delete').forEach(form => {
+            form.addEventListener('submit', function(e) {
 
-        form.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-            e.preventDefault();
+                Swal.fire({
+                    title: 'Yakin?',
+                    text: 'Data akan dihapus permanen.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, Hapus',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
 
-            Swal.fire({
-                title: 'Yakin?',
-                text: 'Data akan dihapus permanen.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#dc3545',
-                cancelButtonColor: '#6c757d',
-                confirmButtonText: 'Ya, Hapus',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
 
-                if (result.isConfirmed) {
-                    form.submit();
-                }
+                });
 
             });
 
         });
-
-    });
-</script>
-
+    </script>
 @endpush
