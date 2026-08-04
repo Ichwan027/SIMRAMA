@@ -17,16 +17,26 @@ class NilaiRepository extends BaseRepository
     /**
      * Load seluruh relasi.
      */
-    public function paginate(int $perPage = 10): LengthAwarePaginator
+    public function paginate(int $perPage = 10, ?string $search = null): LengthAwarePaginator
     {
         $query = Santri::with('kelas')
-    ->orderBy('nama');
+            ->orderBy('nama');
 
-// Admin
-if (AccessHelper::isSuperUser()) {
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('nomor_induk', 'like', "%{$search}%")
+                    ->orWhereHas('kelas', function ($kelas) use ($search) {
+                        $kelas->where('nama', 'like', "%{$search}%");
+                    });
+            });
+        }
 
-    // tidak perlu return
-}
+        // Admin
+        if (AccessHelper::isSuperUser()) {
+
+            // tidak perlu return
+        }
 
 // Ustadz
 elseif (AccessHelper::isUstadz()) {

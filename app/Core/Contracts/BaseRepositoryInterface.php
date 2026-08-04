@@ -10,7 +10,7 @@ interface BaseRepositoryInterface
 {
     public function all(): Collection;
 
-    public function paginate(int $perPage = 10): LengthAwarePaginator;
+    public function paginate(int $perPage = 10, ?string $search = null): LengthAwarePaginator;
 
     public function find(int $id): ?Model;
 

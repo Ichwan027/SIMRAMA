@@ -17,11 +17,22 @@ class SantriRepository extends BaseRepository
     /**
      * Pagination sesuai hak akses user.
      */
-    public function paginate(int $perPage = 10): LengthAwarePaginator
+    public function paginate(int $perPage = 10, ?string $search = null): LengthAwarePaginator
     {
         $query = $this->model
             ->with('kelas')
             ->latest();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                    ->orWhere('nomor_induk', 'like', "%{$search}%")
+                    ->orWhere('jenis_kelamin', 'like', "%{$search}%")
+                    ->orWhereHas('kelas', function ($kelas) use ($search) {
+                        $kelas->where('nama', 'like', "%{$search}%");
+                    });
+            });
+        }
 
         // Admin & Kepala Madrasah melihat semua data
         if (AccessHelper::isSuperUser()) {

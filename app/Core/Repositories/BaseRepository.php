@@ -29,7 +29,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     /**
      * Pagination data.
      */
-    public function paginate(int $perPage = 10): LengthAwarePaginator
+    public function paginate(int $perPage = 10, ?string $search = null): LengthAwarePaginator
     {
         return $this->model
             ->latest()

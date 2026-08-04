@@ -47,15 +47,10 @@ class NilaiController extends BaseCrudController
      */
     public function index(): View
     {
-        // dd('MASUK NILAI CONTROLLER');
         return view($this->view . '.index', [
-
             'title' => $this->title,
-
             'route' => $this->route,
-
-            'data' => $this->service->paginate(10),
-
+            'data' => $this->service->paginate(10, request('q')),
         ]);
     }
 

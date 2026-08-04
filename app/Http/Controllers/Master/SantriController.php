@@ -58,7 +58,7 @@ class SantriController extends BaseCrudController
         return view($this->view . '.index', [
             'title' => $this->title,
             'route' => $this->route,
-            'data'  => $this->service->paginate(10),
+            'data'  => $this->service->paginate(10, request('q')),
         ]);
     }
 

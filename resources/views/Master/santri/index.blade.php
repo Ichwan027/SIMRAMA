@@ -32,6 +32,25 @@
 
     <x-form-card>
 
+        <form action="{{ route('santri.index') }}" method="GET" class="mb-3 row g-2 align-items-center">
+            <div class="col-auto">
+                <input type="search" name="q" class="form-control" placeholder="Cari nama, NIS, atau kelas" value="{{ request('q') }}">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i>
+                    Cari
+                </button>
+            </div>
+            @if(request('q'))
+                <div class="col-auto">
+                    <a href="{{ route('santri.index') }}" class="btn btn-secondary">
+                        Reset
+                    </a>
+                </div>
+            @endif
+        </form>
+
         <div class="table-responsive">
 
             <table class="table table-striped">
@@ -149,7 +168,7 @@
 
     <div class="mt-3 d-flex justify-content-end">
 
-        {{ $data->links() }}
+        {{ $data->appends(request()->except('page'))->links() }}
 
     </div>
 
