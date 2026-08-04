@@ -47,6 +47,7 @@ class NilaiController extends BaseCrudController
      */
     public function index(): View
     {
+        // dd('MASUK NILAI CONTROLLER');
         return view($this->view . '.index', [
 
             'title' => $this->title,
@@ -676,13 +677,13 @@ class NilaiController extends BaseCrudController
     |--------------------------------------------------------------------------
     */
 
-        $doaHarians = DoaHarian::orderBy('urutan')->get();
+        // $doaHarians = DoaHarian::orderBy('urutan')->get();
 
-        $nilaiDoas = NilaiDoa::where('santri_id', $data->santri_id)
-            ->where('tahun_ajaran_id', $data->tahun_ajaran_id)
-            ->where('semester_id', $data->semester_id)
-            ->get()
-            ->keyBy('doa_harian_id');
+        // $nilaiDoas = NilaiDoa::where('santri_id', $data->santri_id)
+        //     ->where('tahun_ajaran_id', $data->tahun_ajaran_id)
+        //     ->where('semester_id', $data->semester_id)
+        //     ->get()
+        //     ->keyBy('doa_harian_id');
 
         /*
     |--------------------------------------------------------------------------
@@ -700,23 +701,23 @@ class NilaiController extends BaseCrudController
 
 
 
-        $nilaiTilawatis = NilaiTilawati::with('tilawati')
-            ->where('nilai_id', $data->id)
-            ->orderBy('tilawati_id')
-            ->get();
+        // $nilaiTilawatis = NilaiTilawati::with('tilawati')
+        //     ->where('nilai_id', $data->id)
+        //     ->orderBy('tilawati_id')
+        //     ->get();
         /*
     |--------------------------------------------------------------------------
     | Tahfidz
     |--------------------------------------------------------------------------
     */
 
-        $tahfidzs = Tahfidz::orderBy('urutan')->get();
+        // $tahfidzs = Tahfidz::orderBy('urutan')->get();
 
-        $nilaiTahfidzs = NilaiTahfidz::where('santri_id', $data->santri_id)
-            ->where('tahun_ajaran_id', $data->tahun_ajaran_id)
-            ->where('semester_id', $data->semester_id)
-            ->get()
-            ->keyBy('tahfidz_id');
+        // $nilaiTahfidzs = NilaiTahfidz::where('santri_id', $data->santri_id)
+        //     ->where('tahun_ajaran_id', $data->tahun_ajaran_id)
+        //     ->where('semester_id', $data->semester_id)
+        //     ->get()
+        //     ->keyBy('tahfidz_id');
 
         /*
     |--------------------------------------------------------------------------
@@ -774,13 +775,13 @@ class NilaiController extends BaseCrudController
         return view('Master.nilai.print', compact(
             'data',
             'guruMengajars',
-            'doaHarians',
-            'nilaiDoas',
+            // 'doaHarians',
+            // 'nilaiDoas',
             'kepribadians',
             'nilaiKepribadians',
-            'nilaiTilawatis',
-            'tahfidzs',
-            'nilaiTahfidzs',
+            // 'nilaiTilawatis',
+            // 'tahfidzs',
+            // 'nilaiTahfidzs',
             'absensi',
             'pengaturan',
             'masterCatatan',
@@ -817,6 +818,14 @@ class NilaiController extends BaseCrudController
      */
     private function authorizeNilai(Nilai $nilai): void
     {
+
+        // dd([
+        //     'login'        => auth()->user()->name,
+        //     'role'         => auth()->user()->role,
+        //     'guru_id'      => auth()->user()->guru_id,
+        //     'kelas_login'  => AccessHelper::kelasId(),
+        //     'kelas_santri' => $nilai->santri->kelas_id,
+        // ]);
         $this->authorizeSantri($nilai->santri);
     }
 

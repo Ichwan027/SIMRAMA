@@ -5,7 +5,7 @@
         <div class="d-flex justify-content-between">
 
             <span>
-                © {{ date('Y') }} SIMRAMA
+                © {{ date('Y') }} SIMRAMA 
             </span>
 
             <span>

@@ -20,26 +20,29 @@ class NilaiRepository extends BaseRepository
     public function paginate(int $perPage = 10): LengthAwarePaginator
     {
         $query = Santri::with('kelas')
-            ->orderBy('nama');
+    ->orderBy('nama');
 
-        // Admin & Kepala Madrasah
-        if (AccessHelper::isSuperUser()) {
-            return $query->paginate($perPage);
-        }
+// Admin
+if (AccessHelper::isSuperUser()) {
 
-        // Wali kelas
-        if (AccessHelper::isUstadz()) {
+    // tidak perlu return
+}
 
-            $kelasId = AccessHelper::kelasId();
+// Ustadz
+elseif (AccessHelper::isUstadz()) {
 
-            if ($kelasId) {
-                $query->where('kelas_id', $kelasId);
-            } else {
-                $query->whereRaw('1 = 0');
-            }
-        }
+    $kelasId = AccessHelper::kelasId();
 
-        $paginator = $query->paginate($perPage);
+    if ($kelasId) {
+        $query->where('kelas_id', $kelasId);
+    } else {
+        $query->whereRaw('1=0');
+    }
+}
+
+$paginator = $query->paginate($perPage);
+
+        // dd('MASUK REPOSITORY');
 
         // Tambahkan atribut status_raport pada setiap item koleksi
         try {
@@ -64,6 +67,8 @@ class NilaiRepository extends BaseRepository
                     ->where('semester_id', $semester->id)
                     ->first();
 
+                $santri->nilaiAktif = $nilai;
+
                 if (! $nilai) {
                     $santri->status_raport = 'belum';
                     return $santri;
@@ -81,7 +86,8 @@ class NilaiRepository extends BaseRepository
                 if (\App\Models\NilaiDoa::where('santri_id', $santri->id)
                     ->where('tahun_ajaran_id', $tahun->id)
                     ->where('semester_id', $semester->id)
-                    ->exists()) {
+                    ->exists()
+                ) {
                     $sections[] = 'doa';
                     $completed++;
                 }
@@ -90,31 +96,34 @@ class NilaiRepository extends BaseRepository
                 if (\App\Models\NilaiKepribadian::where('santri_id', $santri->id)
                     ->where('tahun_ajaran_id', $tahun->id)
                     ->where('semester_id', $semester->id)
-                    ->exists()) {
+                    ->exists()
+                ) {
                     $sections[] = 'kepribadian';
                     $completed++;
                 }
 
                 // Tilawati
-                if (\App\Models\NilaiTilawati::where('nilai_id', $nilai->id)->exists()) {
-                    $sections[] = 'tilawati';
-                    $completed++;
-                }
+                // if (\App\Models\NilaiTilawati::where('nilai_id', $nilai->id)->exists()) {
+                //     $sections[] = 'tilawati';
+                //     $completed++;
+                // }
 
                 // Tahfidz
-                if (\App\Models\NilaiTahfidz::where('santri_id', $santri->id)
-                    ->where('tahun_ajaran_id', $tahun->id)
-                    ->where('semester_id', $semester->id)
-                    ->exists()) {
-                    $sections[] = 'tahfidz';
-                    $completed++;
-                }
+                // if (\App\Models\NilaiTahfidz::where('santri_id', $santri->id)
+                //     ->where('tahun_ajaran_id', $tahun->id)
+                //     ->where('semester_id', $semester->id)
+                //     ->exists()
+                // ) {
+                //     $sections[] = 'tahfidz';
+                //     $completed++;
+                // }
 
                 // Absensi
                 if (\App\Models\Absensi::where('santri_id', $santri->id)
                     ->where('tahun_ajaran_id', $tahun->id)
                     ->where('semester_id', $semester->id)
-                    ->exists()) {
+                    ->exists()
+                ) {
                     $sections[] = 'absensi';
                     $completed++;
                 }

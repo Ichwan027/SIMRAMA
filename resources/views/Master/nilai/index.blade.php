@@ -51,7 +51,7 @@
 
                                 <td>{{ $item->nama }}</td>
 
-                                <td>{{ $item->kelas?->nama }}</td>
+                                <td>{{ $item->kelas?->nama ?? '-' }}</td>
 
                                 <td>
                                     @if ($item->status_raport == 'lengkap')
@@ -74,14 +74,26 @@
 
                                 <td>
 
-                                    <a href="{{ route('nilai.edit', $item->id) }}" class="btn btn-warning btn-sm">
-                                        Edit
-                                    </a>
+                                    <a href="{{ route('nilai.edit',$item->id) }}"
+    class="btn btn-warning btn-sm">
+    Edit
+</a>
 
-                                    <a href="{{ route('nilai.print', $item->id) }}" class="btn btn-danger btn-sm"
-                                        target="_blank">
-                                        Cetak
-                                    </a>
+@if($item->nilaiAktif)
+
+    <a href="{{ route('nilai.print',$item->nilaiAktif->id) }}"
+        class="btn btn-danger btn-sm"
+        target="_blank">
+        Cetak
+    </a>
+
+@else
+
+    <button class="btn btn-secondary btn-sm" disabled>
+        Cetak
+    </button>
+
+@endif
 
                                 </td>
 

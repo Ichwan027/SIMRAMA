@@ -25,6 +25,7 @@ abstract class BaseService implements CrudServiceInterface
      */
     public function paginate(int $perPage = 10): LengthAwarePaginator
     {
+        // dd($this->repository);
         return $this->repository->paginate($perPage);
     }
 
