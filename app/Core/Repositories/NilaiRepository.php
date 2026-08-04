@@ -38,6 +38,8 @@ class NilaiRepository extends BaseRepository
             // tidak perlu return
         }
 
+        
+
 // Ustadz
 elseif (AccessHelper::isUstadz()) {
 
