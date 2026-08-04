@@ -35,8 +35,10 @@ class GuruMengajarRepository extends BaseRepository
     /**
      * Pagination.
      */
-    public function paginate(int $perPage = 10): LengthAwarePaginator
-    {
+    public function paginate(
+        int $perPage = 10,
+        ?string $search = null
+    ): LengthAwarePaginator {
         $query = $this->model
             ->with([
                 'guru',
@@ -94,5 +96,4 @@ class GuruMengajarRepository extends BaseRepository
 
         abort(403);
     }
-    
 }
